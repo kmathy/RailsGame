@@ -9,6 +9,26 @@
       </div>
 
       <div class="form-group">
+        <%= f.label :last_name %><br />
+        <%= f.text_field :last_name, class: 'form-control' %>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :first_name %><br />
+        <%= f.text_field :first_name, class: 'form-control' %>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :pseudo %><br />
+        <%= f.text_field :pseudo, class: 'form-control' %>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :country %><br />
+        <%= f.country_select :country, only: ['BE','FR','GB','DE','RU','ES','CH'] %>
+      </div>
+
+      <div class="form-group">
         <%= f.label :password %>
         <% if @minimum_password_length %>
             <em>(<%= @minimum_password_length %> characters minimum)</em>
