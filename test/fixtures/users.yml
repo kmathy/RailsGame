@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  country: MyString
+  nb_victory: 1
+  nb_defeat: 1
+  total_points: 1
+
+two:
+  country: MyString
+  nb_victory: 1
+  nb_defeat: 1
+  total_points: 1

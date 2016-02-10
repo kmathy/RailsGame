@@ -1,4 +1,22 @@
 RailsGame::Application.routes.draw do
+  resources :tournament_games
+
+
+  resources :tournament_users
+
+
+  resources :tournaments
+
+
+  resources :matches
+
+
+  resources :users
+
+
+  resources :games
+
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Country:</b>
+  <%= @user.country %>
+</p>
+
+<p>
+  <b>Nb victory:</b>
+  <%= @user.nb_victory %>
+</p>
+
+<p>
+  <b>Nb defeat:</b>
+  <%= @user.nb_defeat %>
+</p>
+
+<p>
+  <b>Total points:</b>
+  <%= @user.total_points %>
+</p>
+
+
+<%= link_to 'Edit', edit_user_path(@user) %> |
+<%= link_to 'Back', users_path %>
