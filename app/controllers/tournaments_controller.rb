@@ -14,6 +14,8 @@ class TournamentsController < ApplicationController
   def show
     @tournament = Tournament.find(params[:id])
 
+    @games = list_games(@tournament)
+
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @tournament }
@@ -83,4 +85,33 @@ class TournamentsController < ApplicationController
   def add_player
 
   end
+
+  # GET /show_games
+  def show_games
+    @games = Game.all
+  end
+
+  # POST /add_game
+  def add_game
+    t_g = TournamentGame.new(:game_id => params[:game][:game_id], :tournament_id => params[:id])
+    if t_g.save
+      redirect_to tournament_path
+    else
+      render :show_games
+    end
+  end
+
+
+  private
+
+  def list_games(tournament)
+    t_g = TournamentGame.find_all_by_tournament_id(tournament.id)
+    @games = @games.to_a
+    t_g.each do |t|
+      game = Game.find(t.game_id)
+      @games.append(game)
+    end
+    @games
+  end
+
 end
