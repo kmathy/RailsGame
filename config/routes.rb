@@ -1,18 +1,21 @@
 RailsGame::Application.routes.draw do
-  resources :tournament_games
 
+  root :to => 'users#sign_in'
+
+  devise_for :users, controllers:{sessions:"users/sessions", registrations: "users/registrations"}
+
+  resources :tournament_games
 
   resources :tournament_users
 
-
   resources :tournaments
+
+  # custom routes
+  match 'show_games/:id'        => 'tournaments#show_games',       via: :get, :as => 'show_games'
+  match 'show_games/:id'        => 'tournaments#add_game',         via: :put, :as => 'add_game'
 
 
   resources :matches
-
-
-  resources :users
-
 
   resources :games
 

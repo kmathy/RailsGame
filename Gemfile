@@ -11,7 +11,6 @@ gem 'pg'
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
-  gem 'sass-rails',   '~> 3.2.3'
   gem 'coffee-rails', '~> 3.2.1'
 
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
@@ -38,5 +37,13 @@ gem 'jquery-rails'
 # gem 'debugger'
 
 # to authenticate an user
-
 gem 'devise'
+gem 'carrierwave', '0.10.0'
+gem 'mini_magick'
+
+# countries
+gem 'country_select'
+
+# to design website
+gem 'sass-rails',   '~> 3.2.3'
+gem 'bootstrap-sass', '~> 3.1.1.0'
