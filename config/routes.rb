@@ -1,8 +1,15 @@
 RailsGame::Application.routes.draw do
 
-  root :to => 'users#sign_in'
-
   devise_for :users, controllers:{sessions:"users/sessions", registrations: "users/registrations"}
+
+  devise_scope :user do
+    authenticated :user do
+      root :to => 'tournaments#index'
+    end
+    unauthenticated do
+      root :to => 'users/registrations#new'
+    end
+  end
 
   resources :tournament_games
 
