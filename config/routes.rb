@@ -23,8 +23,10 @@ RailsGame::Application.routes.draw do
   match 'show_games/:id'        => 'tournaments#add_game',          via: :put,   :as => 'add_game'
   match 'add_player'            => 'tournaments#add_player',        via: :post,  :as => 'add_player'
 
-
   resources :matches
+
+  #custom routes
+  match 'new_match/:id'         => 'matches#new',             via: :get,   :as => 'new_match'
 
   resources :games
 

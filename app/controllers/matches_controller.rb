@@ -25,7 +25,7 @@ class MatchesController < ApplicationController
   # GET /matches/new.json
   def new
     @match = Match.new
-
+    @tournament = Tournament.find_by_id(params[:id])
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @match }
@@ -40,16 +40,12 @@ class MatchesController < ApplicationController
   # POST /matches
   # POST /matches.json
   def create
-    @match = Match.new(params[:match])
-
-    respond_to do |format|
-      if @match.save
-        format.html { redirect_to @match, notice: 'Match was successfully created.' }
-        format.json { render json: @match, status: :created, location: @match }
-      else
-        format.html { render action: "new" }
-        format.json { render json: @match.errors, status: :unprocessable_entity }
-      end
+    match_params = params[:match]
+    match = Match.new(:player_1 => match_params[:player_1], :player_2 => match_params[:player_2], :tournament_id => match_params[:t_id])
+    if match.save
+      redirect_to tournament_path(:id => params[:match][:t_id])
+    else
+      render :new_match
     end
   end
 

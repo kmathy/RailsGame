@@ -35,6 +35,10 @@ class User < ActiveRecord::Base
       message: 'Can\'t be blank'
   }
 
+  validates :pseudo, :uniqueness => {
+      message: 'already exists'
+  }
+
   validates :pseudo, :length => {
       in: 4...20,
       too_short: 'Minimum %{count} characters',

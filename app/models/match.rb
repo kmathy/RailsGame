@@ -1,4 +1,4 @@
 class Match < ActiveRecord::Base
-  attr_accessible :points, :score, :player_1, :player_2
+  attr_accessible :points, :score, :player_1, :player_2, :tournament_id
   belongs_to :tournament
 end

@@ -15,6 +15,7 @@
   <%= @tournament.nb_players_max %>
 </p>
 
+<%= link_to 'Add Match', new_match_path(@tournament.id) %> |
 <%= link_to 'Add Games', :show_games %> |
 <%= link_to 'Edit', edit_tournament_path(@tournament) %> |
 <%= link_to 'Back', tournaments_path %>
@@ -25,5 +26,6 @@
 <% end %>
 
 
-<%= render 'list' %>
+<%= render 'games' %>
 <%= render 'players' %>
+<%= render 'matches' %>

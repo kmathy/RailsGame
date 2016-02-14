@@ -18,6 +18,8 @@ class TournamentsController < ApplicationController
 
     @players = list_players(@tournament)
 
+    @matches = list_matches(@tournament)
+
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @tournament }
@@ -109,7 +111,6 @@ class TournamentsController < ApplicationController
     end
   end
 
-
   private
 
   def list_games(tournament)
@@ -130,6 +131,10 @@ class TournamentsController < ApplicationController
       @players.append(player)
     end
     @players
+  end
+
+  def list_matches(tournament)
+    @matches = Match.find_all_by_tournament_id(tournament.id)
   end
 
 end
