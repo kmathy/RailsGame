@@ -16,6 +16,8 @@ class TournamentsController < ApplicationController
 
     @games = list_games(@tournament)
 
+    @players = list_players(@tournament)
+
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @tournament }
@@ -82,8 +84,14 @@ class TournamentsController < ApplicationController
     end
   end
 
+  # POST /add_player
   def add_player
-
+    t_u = TournamentUser.new(:player_id => session['warden.user.user.key'][0][0], :tournament_id => params[:tournament][:t_id])
+    if t_u.save
+      redirect_to tournament_path(:id => params[:tournament][:t_id])
+    else
+      render tournaments_path
+    end
   end
 
   # GET /show_games
@@ -112,6 +120,16 @@ class TournamentsController < ApplicationController
       @games.append(game)
     end
     @games
+  end
+
+  def list_players(tournament)
+    t_u = TournamentUser.find_all_by_tournament_id(tournament.id)
+    @players = @players.to_a
+    t_u.each do |t|
+      player = User.find(t.player_id)
+      @players.append(player)
+    end
+    @players
   end
 
 end

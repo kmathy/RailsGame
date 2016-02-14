@@ -15,8 +15,15 @@
   <%= @tournament.nb_players_max %>
 </p>
 
-<%= link_to 'Add Games', :show_games %>
+<%= link_to 'Add Games', :show_games %> |
 <%= link_to 'Edit', edit_tournament_path(@tournament) %> |
 <%= link_to 'Back', tournaments_path %>
 
+<%= form_for @tournament, url: add_player_path, method: :post do |f| %>
+    <%= f.hidden_field 't_id', :value => @tournament.id %>
+    <%= f.submit 'Sign in' %>
+<% end %>
+
+
 <%= render 'list' %>
+<%= render 'players' %>

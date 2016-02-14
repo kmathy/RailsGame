@@ -1,6 +1,6 @@
 RailsGame::Application.routes.draw do
 
-  devise_for :users, controllers:{sessions:"users/sessions", registrations: "users/registrations"}
+  devise_for :users, controllers:{sessions:"users/sessions", registrations: "users/registrations", :omniauth_callbacks => "users/omniauth_callbacks"}
 
   devise_scope :user do
     authenticated :user do
@@ -9,6 +9,7 @@ RailsGame::Application.routes.draw do
     unauthenticated do
       root :to => 'users/registrations#new'
     end
+    delete 'sign_out', :to => 'devise/sessions#destroy', :as => :destroy_user_session
   end
 
   resources :tournament_games
@@ -18,8 +19,9 @@ RailsGame::Application.routes.draw do
   resources :tournaments
 
   # custom routes
-  match 'show_games/:id'        => 'tournaments#show_games',       via: :get, :as => 'show_games'
-  match 'show_games/:id'        => 'tournaments#add_game',         via: :put, :as => 'add_game'
+  match 'show_games/:id'        => 'tournaments#show_games',        via: :get,   :as => 'show_games'
+  match 'show_games/:id'        => 'tournaments#add_game',          via: :put,   :as => 'add_game'
+  match 'add_player'            => 'tournaments#add_player',        via: :post,  :as => 'add_player'
 
 
   resources :matches

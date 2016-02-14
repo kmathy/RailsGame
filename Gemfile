@@ -38,6 +38,7 @@ gem 'jquery-rails'
 
 # to authenticate an user
 gem 'devise'
+gem 'omniauth-facebook'
 gem 'carrierwave', '0.10.0'
 gem 'mini_magick'
 
