@@ -15,14 +15,19 @@
   <%= @tournament.nb_players_max %>
 </p>
 
-<%= link_to 'Add Match', new_match_path(@tournament.id) %> |
-<%= link_to 'Add Games', :show_games %> |
-<%= link_to 'Edit', edit_tournament_path(@tournament) %> |
+<% if can? :update, @tournament %>
+    <%= link_to 'Add Match', new_match_path(@tournament.id) %> |
+    <%= link_to 'Add Games', :show_games %> |
+    <%= link_to 'Edit', edit_tournament_path(@tournament) %> |
+<% end %>
 <%= link_to 'Back', tournaments_path %>
-
-<%= form_for @tournament, url: add_player_path, method: :post do |f| %>
-    <%= f.hidden_field 'tournament_id', :value => @tournament.id %>
-    <%= f.submit 'Sign in' %>
+<% if @players.each.equal?(current_user) || @players.empty? %>
+    <%= form_for @tournament, url: add_player_path, method: :post do |f| %>
+        <%= f.hidden_field 'tournament_id', :value => @tournament.id %>
+        <%= f.submit 'Sign in' %>
+    <% end %>
+<% else %>
+    <p>You're already signed in for this tournament</p>
 <% end %>
 
 

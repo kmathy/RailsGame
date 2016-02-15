@@ -88,12 +88,14 @@ class TournamentsController < ApplicationController
 
   # POST /add_player
   def add_player
+    t_id = params[:tournament][:tournament_id]
     t_u = TournamentUser.new(:player_id => session['warden.user.user.key'][0][0],
-                             :tournament_id => params[:tournament][:tournament_id])
+                             :tournament_id => t_id)
     if t_u.save
-      redirect_to tournament_path(:id => params[:tournament][:t_id])
+      redirect_to tournament_path(:id => t_id)
     else
-      render tournaments_path
+      @tournaments = Tournament.all
+      render 'tournaments/index'
     end
   end
 
@@ -108,7 +110,9 @@ class TournamentsController < ApplicationController
     if t_g.save
       redirect_to tournament_path
     else
-      render :show_games
+      flash[:error] = 'game already exists for this tournament'
+      @tournaments = Tournament.all
+      render 'tournaments/index'
     end
   end
 

@@ -3,11 +3,7 @@ class TournamentUser < ActiveRecord::Base
   belongs_to :tournament
   belongs_to :user
 
-  validates :tournament_id, :presence => {
-      message: 'can\'t be blank'
-  }
-
-  validates :player_id, :presence => {
+  validates :tournament_id, :player_id, :presence => {
       message: 'can\'t be blank'
   }
 

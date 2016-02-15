@@ -1,6 +1,6 @@
 <h1>Listing tournaments</h1>
 
-<table>
+<table class="table table-bordered table-hover">
   <tr>
     <th>Name</th>
     <th>Place</th>
@@ -10,18 +10,23 @@
     <th></th>
   </tr>
 
-<% @tournaments.each do |tournament| %>
-  <tr>
-    <td><%= tournament.name %></td>
-    <td><%= tournament.place %></td>
-    <td><%= tournament.nb_players_max %></td>
-    <td><%= link_to 'Show', tournament %></td>
-    <td><%= link_to 'Edit', edit_tournament_path(tournament) %></td>
-    <td><%= link_to 'Destroy', tournament, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-  </tr>
-<% end %>
+  <% @tournaments.each do |tournament| %>
+      <tr>
+        <td><%= tournament.name %></td>
+        <td><%= tournament.place %></td>
+        <td><%= tournament.nb_players_max %></td>
+        <td><%= link_to 'Show', tournament %></td>
+        <% if can? :update, @tournaments %>
+            <td><%= link_to 'Edit', edit_tournament_path(tournament) %></td>
+        <% end %>
+        <% if can? :destroy, @tournaments %>
+            <td><%= link_to 'Destroy', tournament, method: :delete, data: {confirm: 'Are you sure?'} %></td>
+      <% end %>
+      </tr>
+  <% end %>
 </table>
 
-<br />
-
-<%= link_to 'New Tournament', new_tournament_path %>
+<br/>
+<% if can? :create, @tournaments %>
+    <%= link_to 'New Tournament', new_tournament_path %>
+<% end %>
