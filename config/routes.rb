@@ -1,5 +1,8 @@
 RailsGame::Application.routes.draw do
 
+  resources :match_games
+
+
   devise_for :users, controllers:{sessions:"users/sessions", registrations: "users/registrations", :omniauth_callbacks => "users/omniauth_callbacks"}
 
   devise_scope :user do

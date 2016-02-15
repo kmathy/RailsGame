@@ -3,6 +3,7 @@ class Game < ActiveRecord::Base
   has_many :tournament_games
   has_many :tournaments, :through => :tournament_games
   has_many :users, :through => :tournaments
+  has_many :matches, :through => :match_game
 
   validates :description, :presence => {
       message: 'Can\'t be blank'
