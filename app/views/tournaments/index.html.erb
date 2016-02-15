@@ -1,14 +1,18 @@
 <h1>Listing tournaments</h1>
 
 <table class="table table-bordered table-hover">
-  <tr>
+  <thead>
     <th>Name</th>
     <th>Place</th>
     <th>Nb players max</th>
     <th></th>
-    <th></th>
-    <th></th>
-  </tr>
+    <% if can? :update, @tournaments %>
+        <th></th>
+    <% end %>
+    <% if can? :destroy, @tournaments %>
+        <th></th>
+    <% end %>
+  </thead>
 
   <% @tournaments.each do |tournament| %>
       <tr>
@@ -21,7 +25,7 @@
         <% end %>
         <% if can? :destroy, @tournaments %>
             <td><%= link_to 'Destroy', tournament, method: :delete, data: {confirm: 'Are you sure?'} %></td>
-      <% end %>
+        <% end %>
       </tr>
   <% end %>
 </table>

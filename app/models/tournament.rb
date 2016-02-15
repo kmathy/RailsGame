@@ -1,20 +1,31 @@
 class Tournament < ActiveRecord::Base
+
+  # Attributes
+
   attr_accessible :name, :nb_players_max, :place, :games, :matches, :users
+  attr_accessible :latitude, :longitude
+
+  # Associations
+
   has_many :tournament_games
   has_many :games, :through => :tournament_games
   has_many :matches
   has_many :tournament_users
   has_many :users, through: :tournament_users
 
-  validates :name, :presence => {
-      message: 'can\'t be blank'
-  }
+  # Geolocation
 
-  validates :nb_players_max, :presence => {
-      message: 'can\'t be blank'
-  }
+  geocoded_by :place
+  after_validation :geocode
 
-  validates :place, :presence => {
+  reverse_geocoded_by :latitude, :longitude, :address => :place
+  after_validation :reverse_geocode
+
+
+
+  # validations
+
+  validates :name, :nb_players_max, :place, :presence => {
       message: 'can\'t be blank'
   }
 
