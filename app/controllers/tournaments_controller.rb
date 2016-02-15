@@ -78,6 +78,8 @@ class TournamentsController < ApplicationController
   # DELETE /tournaments/1.json
   def destroy
     @tournament = Tournament.find(params[:id])
+    TournamentGame.destroy_all(:tournament_id => @tournament.id)
+    TournamentUser.destroy_all(:tournament_id => @tournament.id)
     @tournament.destroy
 
     respond_to do |format|
