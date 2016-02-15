@@ -23,15 +23,7 @@ class User < ActiveRecord::Base
 
   # Validations
 
-  validates :first_name, :presence => {
-      message: 'Can\'t be blank'
-  }
-
-  validates :last_name, :presence => {
-      message: 'Can\'t be blank'
-  }
-
-  validates :pseudo, :presence => {
+  validates :first_name, :last_name, :pseudo, :presence => {
       message: 'Can\'t be blank'
   }
 
@@ -39,13 +31,7 @@ class User < ActiveRecord::Base
       message: 'already exists'
   }
 
-  validates :pseudo, :length => {
-      in: 4...20,
-      too_short: 'Minimum %{count} characters',
-      too_long: 'Maximum %{count} characters'
-  }
-
-  validates :password, :length => {
+  validates :pseudo, :password, :length => {
       in: 4...20,
       too_short: 'Minimum %{count} characters',
       too_long: 'Maximum %{count} characters'

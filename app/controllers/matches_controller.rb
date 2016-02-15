@@ -40,10 +40,9 @@ class MatchesController < ApplicationController
   # POST /matches
   # POST /matches.json
   def create
-    match_params = params[:match]
-    match = Match.new(:player_1 => match_params[:player_1], :player_2 => match_params[:player_2], :tournament_id => match_params[:t_id])
+    match = Match.new(match_params)
     if match.save
-      redirect_to tournament_path(:id => params[:match][:t_id])
+      redirect_to tournament_path(:id => params[:match][:tournament_id])
     else
       render :new_match
     end
@@ -75,5 +74,11 @@ class MatchesController < ApplicationController
       format.html { redirect_to matches_url }
       format.json { head :no_content }
     end
+  end
+
+  private
+
+  def match_params
+    params.require(:match).permit(:player_1, :player_2, :tournament_id)
   end
 end

@@ -43,6 +43,9 @@ gem 'omniauth-facebook'
 gem 'carrierwave', '0.10.0'
 gem 'mini_magick'
 
+# to manage authorization
+gem 'cancancan', '~> 1.10'
+
 # countries
 gem 'country_select'
 

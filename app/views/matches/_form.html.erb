@@ -18,7 +18,7 @@
       <%= f.label :player_2 %>
       <%= f.select :player_2, User.all.collect { |user| [user.pseudo, user.id] }, {prompt: 'Select player 2'}, :class => 'form-control' %>
 
-      <%= f.hidden_field 't_id', :value => @tournament.id %>
+      <%= f.hidden_field 'tournament_id', :value => @tournament.id %>
       <br/>
       <%= f.submit 'Create Match', :class => 'btn btn-primary' %>
   <% end %>
