@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20160214162310) do
+ActiveRecord::Schema.define(:version => 20160215093519) do
 
   create_table "games", :force => true do |t|
     t.string   "title"
@@ -96,6 +96,7 @@ ActiveRecord::Schema.define(:version => 20160214162310) do
     t.string   "avatar"
     t.string   "provider"
     t.string   "uid"
+    t.string   "role"
   end
 
   add_index "users", ["confirmation_token"], :name => "index_users_on_confirmation_token", :unique => true

@@ -1,6 +1,7 @@
 class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable and :omniauthable
+  # :lockable, :timeoutable
+
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable,
          :confirmable
@@ -8,9 +9,14 @@ class User < ActiveRecord::Base
   devise :omniauthable, :omniauth_providers => [:facebook]
 
   # Setup accessible (or protected) attributes for your model
+
   attr_accessible :email, :password, :password_confirmation, :remember_me
   attr_accessible :country, :nb_defeat, :nb_victory, :total_points
-  attr_accessible :pseudo, :last_name, :first_name, :avatar
+  attr_accessible :pseudo, :last_name, :first_name, :avatar, :role
+
+  # Ability constants
+
+  ROLES = %i[admin moderator player]
 
   # For avatar
   mount_uploader :avatar, AvatarUploader
@@ -36,6 +42,14 @@ class User < ActiveRecord::Base
       too_short: 'Minimum %{count} characters',
       too_long: 'Maximum %{count} characters'
   }
+
+  # Methods for ability
+
+  def admin?
+    self.role == 'admin'
+  end
+
+  # Methods for OmniAuth
 
   def self.from_omniauth(auth)
     where(provider: auth.provider, uid: auth.uid).first_or_create do |user|

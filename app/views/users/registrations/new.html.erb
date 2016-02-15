@@ -47,7 +47,7 @@
         <%= f.label :password_confirmation %><br />
         <%= f.password_field :password_confirmation, autocomplete: "off", class: 'form-control' %>
       </div>
-
+      <%= f.hidden_field 'role', :value => 'player' %>
       <div class="form-group">
         <%= f.submit "Sign up", class: 'btn btn-lg btn-primary' %>
       </div>
