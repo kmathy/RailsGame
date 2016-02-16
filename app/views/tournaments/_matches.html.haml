@@ -1,0 +1,5 @@
+%h2 Listing matches for this tournament
+%ul.list-group
+  = @matches.each do |match|
+    %li.list-group-item
+      = link_to "#{User.find(match.player_1).pseudo} VS #{User.find(match.player_2).pseudo}", match_path(match.id)

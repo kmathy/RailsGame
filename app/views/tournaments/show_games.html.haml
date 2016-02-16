@@ -1,0 +1,17 @@
+%table.table.table-hover.table-bordered
+  %thead
+    %tr
+      %th Title
+      %th Description
+      %th genre
+      %th add game
+  %tbody
+    = @games.each do |game|
+      %tr
+        %td= game.title
+        %td= game.description
+        %td= game.genre
+        %td
+          = form_for game, url: add_game_path do |f|
+            = f.hidden_field "game_id", :value => game.id
+            = f.submit 'Add', :class => 'btn btn-primary'

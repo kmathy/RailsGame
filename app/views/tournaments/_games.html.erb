@@ -1,6 +1,0 @@
-<h2>Listing Games for this tournament</h2>
-<ul class="list-group">
-  <%= @games.each do |game| %>
-    <li class="list-group list-group-item"><%= link_to game.title, game_path(game) %></li>
-  <% end %>
-</ul>

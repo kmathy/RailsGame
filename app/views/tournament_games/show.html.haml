@@ -1,0 +1,10 @@
+%p#notice= notice
+%p
+  %b Tournament:
+  = @tournament_game.tournament_id
+%p
+  %b Game:
+  = @tournament_game.game_id
+= link_to 'Edit', edit_tournament_game_path(@tournament_game)
+|
+\#{link_to 'Back', tournament_games_path}

@@ -1,0 +1,26 @@
+%p#notice= notice
+%p
+  %b Name:
+  = @tournament.name
+%p
+  %b Place:
+  = @tournament.place
+  = @tournament.to_coordinates
+%p
+  %b Nb players max:
+  = @tournament.nb_players_max
+- if can? :update, @tournament
+  = link_to 'Add Match', new_match_path(@tournament.id)
+  |
+  \#{link_to 'Add Games', :show_games} |
+  \#{link_to 'Edit', edit_tournament_path(@tournament)} |
+= link_to 'Back', tournaments_path
+- if @players.each.equal?(current_user) || @players.empty?
+  = form_for @tournament, url: add_player_path, method: :post do |f|
+    = f.hidden_field 'tournament_id', :value => @tournament.id
+    = f.submit 'Sign in'
+- else
+  %p You're already signed in for this tournament
+= render 'games'
+= render 'players'
+= render 'matches'

@@ -1,0 +1,4 @@
+%h2 Listing players for this tournament
+%ul.list-group
+  = @players.each do |player|
+    %li.list-group.list-group-item= player.pseudo

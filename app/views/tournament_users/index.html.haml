@@ -1,0 +1,13 @@
+%h1 Listing tournament_users
+%table
+  %tr
+    %th
+    %th
+    %th
+  - @tournament_users.each do |tournament_user|
+    %tr
+      %td= link_to 'Show', tournament_user
+      %td= link_to 'Edit', edit_tournament_user_path(tournament_user)
+      %td= link_to 'Destroy', tournament_user, method: :delete, data: { confirm: 'Are you sure?' }
+%br/
+= link_to 'New Tournament user', new_tournament_user_path

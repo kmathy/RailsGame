@@ -58,3 +58,5 @@ gem 'bootstrap-sass', '~> 3.1.1.0'
 
 # TO use HAML
 gem 'html2haml'
+gem 'haml'
+gem 'haml-rails'

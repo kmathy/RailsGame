@@ -1,8 +1,0 @@
-<h2>Listing matches for this tournament</h2>
-<ul class="list-group">
-  <%= @matches.each do |match| %>
-    <li class="list-group-item">
-      <%= link_to "#{User.find(match.player_1).pseudo} VS #{User.find(match.player_2).pseudo}", match_path(match.id) %>
-    </li>
-  <% end %>
-</ul>
