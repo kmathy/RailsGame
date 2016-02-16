@@ -54,7 +54,7 @@ gem 'country_select'
 
 # to design website
 gem 'sass-rails',   '~> 3.2.3'
-gem 'bootstrap-sass', '~> 3.1.1.0'
+gem 'bootstrap-sass', '3.1.1.0'
 
 # TO use HAML
 gem 'html2haml'
