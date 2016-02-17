@@ -1,0 +1,20 @@
+%h1 Your profile
+
+%p
+  %b Email:
+  = @user.email
+
+%p
+  %b Avatar:
+  = image_tag @user.avatar_url if @user.avatar
+
+%p
+  %b Name:
+  = @user.first_name
+  = @user.last_name
+
+%p
+  %b last connexion:
+  = @user.last_sign_in_at.to_datetime.to_formatted_s(:short)
+
+%a.btn.btn-info.btn-lg{:href => edit_user_registration_path} Edit your profile

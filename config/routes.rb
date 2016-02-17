@@ -1,19 +1,12 @@
 RailsGame::Application.routes.draw do
 
-  devise_for :users, controllers:{sessions:"users/sessions", registrations: "users/registrations",
-                                  :omniauth_callbacks => "users/omniauth_callbacks"}
 
-  #devise_scope :user do
-  #  authenticated :user do
-  #    root :to => 'tournaments#index'
-  #  end
-  #  unauthenticated do
-  #    root :to => 'devise/sessions#new'
-  #  end
-  #  get 'sign-in' => 'devise/sessions#new', :as => :new_user_session
-  #  post 'sign-in' => 'devise/sessions#create', :as => :user_session
-  #  delete 'sign-out' => 'devise/sessions#destroy', :as => :destroy_user_session
-  #end
+  devise_for :users, controllers:{sessions:"users/sessions", registrations: "users/registrations",
+  :omniauth_callbacks => "users/omniauth_callbacks"}
+
+  match 'profile'               => 'user#show',                     via: :get,   :as => 'show_user'
+  match 'profile/update'        => 'user#edit',                     via: :get,   :as => 'edit_user'
+  match 'profile/update'        => 'user#update',                   via: :post,  :as => 'update_user'
 
   resources :tournaments
 

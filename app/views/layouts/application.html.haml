@@ -6,7 +6,7 @@
     = javascript_include_tag "application"
     = csrf_meta_tags
   %body
-    .navbar.navbar-default.navbar-static-top
+    .navbar.navbar-default.navbar-fixed-top
       - if logged_in?
         .navbar-header
           %a.navbar-brand{:href => "#"}
@@ -23,7 +23,7 @@
                   %li
                     = link_to 'Sign out', destroy_user_session_path, method: :delete
                   %li
-                    %a{:href => "#"} view profile
+                    = link_to 'View Profile', show_user_path
             - else
               %li.active
                 = link_to 'Sign in', new_user_session_path

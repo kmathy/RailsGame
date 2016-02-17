@@ -116,10 +116,9 @@ class TournamentsController < ApplicationController
     redirect_to tournament_path(params[:id])
   end
 
-  private
+  def seed_match
 
-  def list_matches(tournament)
-    @matches = Match.find_all_by_tournament_id(tournament.id)
+
+    match = Match.new()
   end
-
 end

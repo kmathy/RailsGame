@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20160217101448) do
+ActiveRecord::Schema.define(:version => 20160217104311) do
 
   create_table "games", :force => true do |t|
     t.string   "title"
@@ -27,6 +27,8 @@ ActiveRecord::Schema.define(:version => 20160217101448) do
   create_table "matches", :force => true do |t|
     t.integer "score"
     t.integer "points"
+    t.integer "player_1"
+    t.integer "player_2"
   end
 
   create_table "tournaments", :force => true do |t|
