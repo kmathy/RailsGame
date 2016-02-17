@@ -1,0 +1,25 @@
+Wed, 17 Feb 2016 15:09:08 +0100
+doc/README_FOR_APP	Tue, 16 Feb 2016 10:30:47 +0100
+app/controllers/application_controller.rb	Tue, 16 Feb 2016 10:30:47 +0100
+app/controllers/games_controller.rb	Tue, 16 Feb 2016 15:05:03 +0100
+app/controllers/tournaments_controller.rb	Wed, 17 Feb 2016 13:19:22 +0100
+app/controllers/user_controller.rb	Wed, 17 Feb 2016 13:26:05 +0100
+app/controllers/users/confirmations_controller.rb	Tue, 16 Feb 2016 10:30:47 +0100
+app/controllers/users/omniauth_callbacks_controller.rb	Tue, 16 Feb 2016 10:30:47 +0100
+app/controllers/users/passwords_controller.rb	Tue, 16 Feb 2016 10:30:47 +0100
+app/controllers/users/registrations_controller.rb	Tue, 16 Feb 2016 10:30:47 +0100
+app/controllers/users/sessions_controller.rb	Wed, 17 Feb 2016 14:09:23 +0100
+app/controllers/users/unlocks_controller.rb	Tue, 16 Feb 2016 10:30:47 +0100
+app/helpers/application_helper.rb	Tue, 16 Feb 2016 10:30:47 +0100
+app/helpers/devise_helper.rb	Tue, 16 Feb 2016 10:30:47 +0100
+app/helpers/games_helper.rb	Tue, 16 Feb 2016 10:30:47 +0100
+app/helpers/matches_helper.rb	Tue, 16 Feb 2016 10:30:47 +0100
+app/helpers/tournaments_helper.rb	Tue, 16 Feb 2016 10:30:47 +0100
+app/helpers/user_helper.rb	Wed, 17 Feb 2016 13:19:25 +0100
+app/helpers/users_helper.rb	Tue, 16 Feb 2016 10:30:47 +0100
+app/models/ability.rb	Tue, 16 Feb 2016 10:30:47 +0100
+app/models/game.rb	Wed, 17 Feb 2016 08:53:00 +0100
+app/models/match.rb	Wed, 17 Feb 2016 11:52:15 +0100
+app/models/tournament.rb	Wed, 17 Feb 2016 10:00:07 +0100
+app/models/user.rb	Tue, 16 Feb 2016 17:00:37 +0100
+app/uploaders/avatar_uploader.rb	Tue, 16 Feb 2016 10:30:47 +0100

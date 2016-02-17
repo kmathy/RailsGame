@@ -2,7 +2,7 @@ class TournamentsController < ApplicationController
   # GET /tournaments
   # GET /tournaments.json
   def index
-    @tournaments = Tournament.all
+    @tournaments = Kaminari.paginate_array(Tournament.all).page(params[:page])
     respond_to do |format|
       format.html # index.html.haml
       format.json { render json: @tournaments }
@@ -90,7 +90,8 @@ class TournamentsController < ApplicationController
 
   # GET /show_games
   def show_games
-    @games = Game.all
+    games = Tournament.find(params[:id]).games
+    @games = Game.all.reject {|t| games.any? { |g| t['title'].include?(g.title)}}
   end
 
   # POST /add_game

@@ -60,3 +60,6 @@ gem 'bootstrap-sass', '3.1.1.0'
 gem 'html2haml'
 gem 'haml'
 gem 'haml-rails'
+
+# To paginate
+gem 'kaminari'

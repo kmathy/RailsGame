@@ -15,7 +15,7 @@
 - if can? :update, @tournament
   = link_to 'Add Match', new_match_path(@tournament.id)
   |
-  = link_to 'Add Games', :show_games
+  = link_to 'Add Games', show_games_path(@tournament.id)
   |
   = link_to 'Edit', edit_tournament_path(@tournament)
   |

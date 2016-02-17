@@ -21,5 +21,9 @@
         %td= link_to 'Destroy', tournament, method: :delete, data: {confirm: 'Are you sure?'}
 %br/
 - if can? :create, @tournaments
-  = link_to 'New Tournament', new_tournament_path
-  = link_to 'Seed tournaments', seed_tournaments_path, method: :post
+  %p
+    = link_to 'New Tournament', new_tournament_path
+  %p
+    = link_to 'Seed tournaments', seed_tournaments_path, method: :post
+%p.text-center
+  = paginate @tournaments
