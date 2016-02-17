@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20160217074334) do
+ActiveRecord::Schema.define(:version => 20160217101448) do
 
   create_table "games", :force => true do |t|
     t.string   "title"
@@ -41,6 +41,7 @@ ActiveRecord::Schema.define(:version => 20160217074334) do
   end
 
   add_index "tournaments", ["date"], :name => "index_tournaments_on_date"
+  add_index "tournaments", ["latitude", "longitude"], :name => "index_tournaments_on_latitude_and_longitude"
   add_index "tournaments", ["place"], :name => "index_tournaments_on_place"
 
   create_table "tournaments_games", :force => true do |t|
