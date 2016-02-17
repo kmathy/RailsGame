@@ -2,16 +2,14 @@ class Tournament < ActiveRecord::Base
 
   # Attributes
 
-  attr_accessible :name, :nb_players_max, :place, :games, :matches, :users
+  attr_accessible :name, :nb_players_max, :place
   attr_accessible :latitude, :longitude
 
   # Associations
 
-  has_many :tournament_games
-  has_many :games, :through => :tournament_games
+  has_and_belongs_to_many :games, :join_table => 'tournaments_games'
+  has_and_belongs_to_many :users
   has_many :matches
-  has_many :tournament_users
-  has_many :users, through: :tournament_users
 
   # Geolocation
 
@@ -20,7 +18,6 @@ class Tournament < ActiveRecord::Base
 
   reverse_geocoded_by :latitude, :longitude, :address => :place
   after_validation :reverse_geocode
-
 
 
   # validations

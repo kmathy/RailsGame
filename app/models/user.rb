@@ -23,9 +23,7 @@ class User < ActiveRecord::Base
 
   # Associations
 
-  has_many :games, :through => :tournament
-  has_many :tournament_users
-  has_many :tournaments, :through => :tournament_users
+  has_and_belongs_to_many :tournaments
 
   # Validations
 

@@ -80,4 +80,11 @@ class GamesController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  def seed
+    for i in 0..5
+      Game.create(:title => "Test n°#{i}", :description => "Description longue", :genre => "genre")
+    end
+    redirect_to games_path
+  end
 end

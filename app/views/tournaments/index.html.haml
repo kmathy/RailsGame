@@ -22,3 +22,4 @@
 %br/
 - if can? :create, @tournaments
   = link_to 'New Tournament', new_tournament_path
+  = link_to 'Seed tournaments', seed_tournaments_path, method: :post

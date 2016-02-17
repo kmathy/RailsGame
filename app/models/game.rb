@@ -1,9 +1,7 @@
 class Game < ActiveRecord::Base
   attr_accessible :description, :title, :genre
-  has_many :tournament_games
-  has_many :tournaments, :through => :tournament_games
-  has_many :users, :through => :tournaments
-  has_many :matches, :through => :match_game
+  has_and_belongs_to_many :tournaments
+  belongs_to :match
 
   validates :description, :presence => {
       message: 'Can\'t be blank'
@@ -18,10 +16,6 @@ class Game < ActiveRecord::Base
   }
 
   validates :title, :uniqueness => {
-      message: 'already exists'
-  }
-
-  validates :genre, :uniqueness => {
       message: 'already exists'
   }
 

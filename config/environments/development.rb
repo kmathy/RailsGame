@@ -15,7 +15,7 @@ RailsGame::Application.configure do
 
   # config Mailer
 
-  config.action_mailer.perform_deliveries = true # Set it to false to disable the email in dev mode
+  config.action_mailer.perform_deliveries = false # Set it to false to disable the email in dev mode
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.default_url_options = { :host => "localhost", :port => 3000 }
   config.action_mailer.default :charset => "utf-8"

@@ -11,7 +11,7 @@
         .navbar-header
           %a.navbar-brand{:href => "#"}
             = image_tag @current_user.avatar_url, :class => 'img-circle'
-      .container
+      .container-fluid
         .collapse.navbar-collapse
           %ul.nav.navbar-nav
             - if logged_in?

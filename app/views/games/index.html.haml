@@ -1,6 +1,6 @@
 %h1 Listing games
-%table
-  %tr
+%table.table.table-bordered.table-hover
+  %thead
     %th Title
     %th Description
     %th Genre
@@ -17,3 +17,4 @@
       %td= link_to 'Destroy', game, method: :delete, data: { confirm: 'Are you sure?' }
 %br/
 = link_to 'New Game', new_game_path
+= link_to 'Seed Games', seed_games_path, method: :post

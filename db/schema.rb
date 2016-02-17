@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20160215160622) do
+ActiveRecord::Schema.define(:version => 20160217074334) do
 
   create_table "games", :force => true do |t|
     t.string   "title"
@@ -24,51 +24,10 @@ ActiveRecord::Schema.define(:version => 20160215160622) do
   add_index "games", ["description"], :name => "index_games_on_description"
   add_index "games", ["title"], :name => "index_games_on_title"
 
-  create_table "match_games", :force => true do |t|
-    t.integer  "match_id"
-    t.integer  "game_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
-
-  add_index "match_games", ["game_id", "match_id"], :name => "index_match_games_on_game_id_and_match_id", :unique => true
-  add_index "match_games", ["game_id"], :name => "index_match_games_on_game_id"
-  add_index "match_games", ["match_id"], :name => "index_match_games_on_match_id"
-
   create_table "matches", :force => true do |t|
-    t.integer  "score"
-    t.integer  "points"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
-    t.integer  "player_1"
-    t.integer  "player_2"
-    t.integer  "tournament_id"
+    t.integer "score"
+    t.integer "points"
   end
-
-  add_index "matches", ["player_1"], :name => "index_matches_on_player_1"
-  add_index "matches", ["player_2"], :name => "index_matches_on_player_2"
-
-  create_table "tournament_games", :force => true do |t|
-    t.integer  "tournament_id"
-    t.integer  "game_id"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
-  end
-
-  add_index "tournament_games", ["game_id", "tournament_id"], :name => "index_tournament_games_on_game_id_and_tournament_id", :unique => true
-  add_index "tournament_games", ["game_id"], :name => "index_tournament_games_on_game_id"
-  add_index "tournament_games", ["tournament_id"], :name => "index_tournament_games_on_tournament_id"
-
-  create_table "tournament_users", :force => true do |t|
-    t.integer  "player_id"
-    t.integer  "tournament_id"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
-  end
-
-  add_index "tournament_users", ["player_id", "tournament_id"], :name => "index_tournament_users_on_player_id_and_tournament_id", :unique => true
-  add_index "tournament_users", ["player_id"], :name => "index_tournament_users_on_player_id"
-  add_index "tournament_users", ["tournament_id"], :name => "index_tournament_users_on_tournament_id"
 
   create_table "tournaments", :force => true do |t|
     t.string   "name"
@@ -83,6 +42,22 @@ ActiveRecord::Schema.define(:version => 20160215160622) do
 
   add_index "tournaments", ["date"], :name => "index_tournaments_on_date"
   add_index "tournaments", ["place"], :name => "index_tournaments_on_place"
+
+  create_table "tournaments_games", :force => true do |t|
+    t.integer "tournament_id"
+    t.integer "game_id"
+  end
+
+  add_index "tournaments_games", ["game_id"], :name => "index_tournaments_games_on_game_id"
+  add_index "tournaments_games", ["tournament_id"], :name => "index_tournaments_games_on_tournament_id"
+
+  create_table "tournaments_users", :force => true do |t|
+    t.integer "tournament_id"
+    t.integer "user_id"
+  end
+
+  add_index "tournaments_users", ["tournament_id"], :name => "index_tournaments_users_on_tournament_id"
+  add_index "tournaments_users", ["user_id"], :name => "index_tournaments_users_on_user_id"
 
   create_table "users", :force => true do |t|
     t.string   "country"

@@ -17,12 +17,26 @@
   = link_to 'Edit', edit_tournament_path(@tournament)
   |
 = link_to 'Back', tournaments_path
-- if @players.each.equal?(current_user) || @players.empty?
+- if @tournament.users.each.equal?(current_user) || @tournament.users.empty?
   = form_for @tournament, url: add_player_path, method: :post do |f|
     = f.hidden_field 'tournament_id', :value => @tournament.id
     = f.submit 'Sign in'
 - else
   %p You're already signed in for this tournament
-= render 'games'
-= render 'players'
-= render 'matches'
+
+= link_to 'Seed players', seed_players_path(@tournament.id), method: :post
+
+%ul.list-group
+  = @tournament.users.each do |player|
+    %li.list-group-item
+      = player.pseudo
+
+
+= @tournament.games.each do |game|
+  %h2
+    = game.title
+    = link_to 'Sign in all players'
+
+
+
+
