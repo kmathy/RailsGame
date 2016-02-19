@@ -20,25 +20,33 @@
   = link_to 'Edit', edit_tournament_path(@tournament)
   |
 = link_to 'Back', tournaments_path
-- if @tournament.users.each.equal?(current_user) || @tournament.users.empty?
+- if @tournament.users.include?(@current_user)
+  %p
+    you're already signed in for this tournament
+- else
   = form_for @tournament, url: add_player_path, method: :post do |f|
     = f.hidden_field 'tournament_id', :value => @tournament.id
     = f.submit 'Sign in'
-- else
-  %p You're already signed in for this tournament
 
 = link_to 'Seed players', seed_players_path(@tournament.id), method: :post
 
-%ul.list-group
-  = @tournament.users.each do |player|
-    %li.list-group-item
-      = player.pseudo
+- if @tournament.users.any?
+  %ul.list-group
+    - @tournament.users.each do |player|
+      %li.list-group-item
+        = player.pseudo
+- else
+  %p
+    No players for this tournament.
 
-
-= @tournament.games.each do |game|
-  %h2
-    = game.title
-    = link_to 'Sign in all players'
+- if @tournament.games.any?
+  - @tournament.games.each do |game|
+    %h2
+      = game.title
+      = link_to 'Sign in all players'
+- else
+  %p
+    No games for this tournament. A new game will be added rapidly.
 
 
 

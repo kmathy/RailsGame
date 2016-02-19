@@ -6,7 +6,7 @@
       %th genre
       %th add game
   %tbody
-    = @games.each do |game|
+    - @games.each do |game|
       %tr
         %td= game.title
         %td= game.description

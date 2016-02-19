@@ -1,11 +1,18 @@
 class TournamentsController < ApplicationController
+
+  before_filter :authenticate_user!
+
   # GET /tournaments
   # GET /tournaments.json
   def index
-    @tournaments = Kaminari.paginate_array(Tournament.all).page(params[:page])
-    respond_to do |format|
-      format.html # index.html.haml
-      format.json { render json: @tournaments }
+    if params[:query].present?
+      @tournaments = Tournament.search(params[:query], page: params[:page])
+    else
+      @tournaments = Kaminari.paginate_array(Tournament.all).page(params[:page])
+      respond_to do |format|
+        format.html # index.html.haml
+        format.json { render json: @tournaments }
+      end
     end
   end
 
@@ -91,7 +98,7 @@ class TournamentsController < ApplicationController
   # GET /show_games
   def show_games
     games = Tournament.find(params[:id]).games
-    @games = Game.all.reject {|t| games.any? { |g| t['title'].include?(g.title)}}
+    @games = Game.all.reject { |t| games.any? { |g| t['title'].include?(g.title) } }
   end
 
   # POST /add_game
@@ -121,5 +128,9 @@ class TournamentsController < ApplicationController
 
 
     match = Match.new()
+  end
+
+  def autocomplete
+    render json: Tournament.search(params[:query], autocomplete: true, limit: 10).map(&:place)
   end
 end

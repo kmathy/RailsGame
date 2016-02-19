@@ -1,4 +1,28 @@
 %h1 Listing tournaments
+- @places = []
+- Tournament.all.each do |tournoi|
+  - @places.push(tournoi.place)
+
+
+
+= form_tag tournaments_path, class: "form-inline", method: :get do
+  .input-group.input-group-lg
+    - if params[:query].present?
+      .input-group-btn
+        = link_to "clear", tournaments_path, class: 'btn btn-default'
+    = text_field_tag :query, params[:query], class: 'form-control', :id => 'tournament_search', autocomplete: 'off',
+     placeholder: 'place ex: Avenue Louise,...'
+    .input-group-btn
+      = submit_tag 'Search', class: 'btn btn-primary'
+%br/
+:javascript
+  var places = #{@places}
+  $(document).ready(function(){
+    $('#tournament_search').typeahead({
+      source: places,
+      items: 5
+    });
+  });
 %table.table.table-bordered.table-hover
   %thead
     %th Name

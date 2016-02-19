@@ -5,6 +5,9 @@ class Tournament < ActiveRecord::Base
   attr_accessible :name, :nb_players_max, :place
   attr_accessible :latitude, :longitude
 
+  # this object is searcheable
+  searchkick autocomplete: ['place']
+
   # Associations
 
   has_and_belongs_to_many :games, :join_table => 'tournaments_games'

@@ -1,7 +1,7 @@
 class Game < ActiveRecord::Base
   attr_accessible :description, :title, :genre
   has_and_belongs_to_many :tournaments
-  belongs_to :match
+  has_many :matches
 
   validates :description, :presence => {
       message: 'Can\'t be blank'

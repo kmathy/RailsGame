@@ -24,6 +24,9 @@ class User < ActiveRecord::Base
   # Associations
 
   has_and_belongs_to_many :tournaments
+  has_many :matches_1, :class_name => "Match", :foreign_key => 'playerid_1'
+  has_many :matches_2, :class_name => "Match", :foreign_key => 'playerid_2'
+
 
   # Validations
 

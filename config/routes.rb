@@ -1,28 +1,53 @@
 RailsGame::Application.routes.draw do
 
+  devise_for :admin_users, ActiveAdmin::Devise.config
 
-  devise_for :users, controllers:{sessions:"users/sessions", registrations: "users/registrations",
-  :omniauth_callbacks => "users/omniauth_callbacks"}
+  ActiveAdmin.routes(self)
 
-  match 'profile'               => 'user#show',                     via: :get,   :as => 'show_user'
-  match 'profile/update'        => 'user#edit',                     via: :get,   :as => 'edit_user'
-  match 'profile/update'        => 'user#update',                   via: :post,  :as => 'update_user'
+  get "search/index"
+
+  get "search/list_games"
+
+  get "search/list_tournaments"
+
+  get "search/list_users"
+
+  devise_for :users, controllers: {sessions: "users/sessions", registrations: "users/registrations",
+                                   :omniauth_callbacks => "users/omniauth_callbacks"}
+  devise_scope :user do
+    authenticated :user do
+      root to: 'tournaments#index'
+    end
+    unauthenticated do
+      root to: 'devise/sessions#new', as: :unauthenticated_root
+    end
+  end
+
+  match 'profile'               => 'user#show',                 via: :get,    :as => 'show_user'
+  match 'profile/update'        => 'user#edit',                 via: :get,    :as => 'edit_user'
+  match 'profile/update'        => 'user#update',               via: :post,   :as => 'update_user'
+
+
+  resources :tournaments, only: :index do
+    collection do
+      get :autocomplete
+    end
+  end
 
   resources :tournaments
-
   # custom routes
-  match 'show_games/:id'        => 'tournaments#show_games',        via: :get,   :as => 'show_games'
-  match 'show_games/:id'        => 'tournaments#add_game',          via: :put,   :as => 'add_game'
-  match 'add_player'            => 'tournaments#add_player',        via: :post,  :as => 'add_player'
-  match 'seed_tournament'       => 'tournaments#seed',              via: :post,  :as => 'seed_tournaments'
-  match 'seed_players/:id'      => 'tournaments#seed_players',       via: :post,  :as => 'seed_players'
+  match 'show_games/:id'        => 'tournaments#show_games',    via: :get,    :as => 'show_games'
+  match 'show_games/:id'        => 'tournaments#add_game',      via: :put,    :as => 'add_game'
+  match 'add_player'            => 'tournaments#add_player',    via: :post,   :as => 'add_player'
+  match 'seed_tournament'       => 'tournaments#seed',          via: :post,   :as => 'seed_tournaments'
+  match 'seed_players/:id'      => 'tournaments#seed_players',  via: :post,   :as => 'seed_players'
 
   #custom routes
-  match 'new_match/:id'         => 'matches#new',                   via: :get,   :as => 'new_match'
+  match 'new_match/:id'         => 'matches#new',               via: :get,    :as => 'new_match'
 
   resources :games
 
-  match 'seed_games'            => 'games#seed',                    via: :post,  :as => 'seed_games'
+  match 'seed_games'            => 'games#seed',                via: :post,   :as => 'seed_games'
 
 
   # The priority is based upon order of creation:
