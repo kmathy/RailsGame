@@ -5,14 +5,12 @@ class TournamentsController < ApplicationController
   # GET /tournaments
   # GET /tournaments.json
   def index
-    if params[:query].present?
-      @tournaments = Tournament.search(params[:query], page: params[:page])
-    else
-      @tournaments = Kaminari.paginate_array(Tournament.all).page(params[:page])
-      respond_to do |format|
-        format.html # index.html.haml
-        format.json { render json: @tournaments }
-      end
+    @q = Tournament.ransack(params[:q])
+    @q.sorts = 'name ASC' if @q.sorts.empty?
+    @tournaments = Kaminari.paginate_array(@q.result(distinct: true)).page(params[:page])
+    respond_to do |format|
+      format.html # index.html.haml
+      format.json { render json: @tournaments }
     end
   end
 
@@ -130,7 +128,4 @@ class TournamentsController < ApplicationController
     match = Match.new()
   end
 
-  def autocomplete
-    render json: Tournament.search(params[:query], autocomplete: true, limit: 10).map(&:place)
-  end
 end

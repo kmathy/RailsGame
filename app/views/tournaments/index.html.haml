@@ -1,29 +1,36 @@
 %h1 Listing tournaments
+
 - @places = []
-- Tournament.all.each do |tournoi|
-  - @places.push(tournoi.place)
+- Tournament.all.each do |tournament|
+  - @places.push(tournament.place)
 
 
+= search_form_for @q, :class => 'form-inline search', :id => '' do |f|
+  .form-group
+    = f.search_field :place_cont, :class => 'form-control', :id => 'myInput', :placeholder => 'Place ex: Avenue Louise'
+  = f.submit 'Search', class: 'btn btn-primary glyphicon glyphicon-search'
 
-= form_tag tournaments_path, class: "form-inline", method: :get do
-  .input-group.input-group-lg
-    - if params[:query].present?
-      .input-group-btn
-        = link_to "clear", tournaments_path, class: 'btn btn-default'
-    = text_field_tag :query, params[:query], class: 'form-control', :id => 'tournament_search', autocomplete: 'off',
-     placeholder: 'place ex: Avenue Louise,...'
-    .input-group-btn
-      = submit_tag 'Search', class: 'btn btn-primary'
-%br/
 :javascript
   var places = #{@places}
   $(document).ready(function(){
-    $('#tournament_search').typeahead({
-      source: places,
-      items: 5
+    var bh = new Bloodhound({
+        local: places,
+        queryTokenizer: Bloodhound.tokenizers.whitespace,
+        datumTokenizer: Bloodhound.tokenizers.whitespace
+    });
+    //bh.initialize(); //this wasn't in the example, adding it had no effect
+
+    $('#myInput').typeahead({
+      hint: true,
+      highlight:true
+    },
+    {
+      name: "testData",
+      source: bh
     });
   });
-%table.table.table-bordered.table-hover
+
+%table.table.table-hover.table-bordered
   %thead
     %th Name
     %th Place
@@ -43,6 +50,7 @@
         %td= link_to 'Edit', edit_tournament_path(tournament)
       - if can? :destroy, @tournaments
         %td= link_to 'Destroy', tournament, method: :delete, data: {confirm: 'Are you sure?'}
+%table.table.table-bordered.table-hover
 %br/
 - if can? :create, @tournaments
   %p

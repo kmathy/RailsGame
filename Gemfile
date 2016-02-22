@@ -65,8 +65,9 @@ gem 'haml-rails'
 gem 'kaminari'
 
 # for searching
-gem 'searchkick'
+gem 'ransack'
+gem 'twitter-typeahead-rails'
 
 # Admin
 gem 'formtastic', '< 3'
-gem 'activeadmin', github: 'activeadmin', branch: '0-6-stable'
+gem 'activeadmin', '~> 0.6.6'
