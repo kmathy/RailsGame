@@ -87,16 +87,28 @@ class TournamentsController < ApplicationController
 
   # POST /add_player
   def add_player
-    t_id = params[:tournament][:tournament_id]
+    tournament = Tournament.find(params[:tournament][:tournament_id])
+    game = tournament.games.find(params[:tournament][:games])
     user = User.find(session['warden.user.user.key'][0][0])
-    Tournament.find(t_id).users.push(user)
-    redirect_to tournament_path(:id => t_id)
+
+    if game.users.include?(user)
+      redirect_to tournament_path(:id => tournament.id)
+    else
+      user.games.push(game) unless user.games.include?(game)
+      game.users.push(user) unless game.users.include?(user)
+      tournament.users.push(user) unless tournament.users.include?(user)
+
+      create_or_update_match(game, tournament, user)
+
+      redirect_to tournament_path(:id => tournament.id)
+    end
   end
+
 
   # GET /show_games
   def show_games
     games = Tournament.find(params[:id]).games
-    @games = Game.all.reject { |t| games.any? { |g| t['title'].include?(g.title) } }
+    @games = Game.all.reject { |game_tournament| games.any? { |game| game_tournament['title'].include?(game.title) } }
   end
 
   # POST /add_game
@@ -122,10 +134,20 @@ class TournamentsController < ApplicationController
     redirect_to tournament_path(params[:id])
   end
 
-  def seed_match
+  private
 
-
-    match = Match.new()
+  def create_or_update_match(game, tournament, user)
+    if game.matches.any?
+      game.matches.each do |match| # iterate each existing matches
+        if match.player_1 != nil && match.player_2 == nil
+          match.player_2 = user
+          tournament.matches.push(Match.create(:player_1 => user, :game => game))
+        end
+      end
+    else
+      match = Match.create(:player_1 => user, :game => game)
+      tournament.matches.push(match)
+    end
   end
 
 end

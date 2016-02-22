@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20160219124847) do
+ActiveRecord::Schema.define(:version => 20160222160338) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.string   "namespace"
@@ -52,16 +52,25 @@ ActiveRecord::Schema.define(:version => 20160219124847) do
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
     t.string   "genre"
+    t.integer  "user_id"
   end
 
   add_index "games", ["description"], :name => "index_games_on_description"
   add_index "games", ["title"], :name => "index_games_on_title"
 
+  create_table "games_users", :force => true do |t|
+    t.integer "game_id"
+    t.integer "user_id"
+  end
+
   create_table "matches", :force => true do |t|
-    t.integer "score"
     t.integer "points"
     t.integer "player_1"
     t.integer "player_2"
+    t.integer "score_1"
+    t.integer "score_2"
+    t.integer "game_id"
+    t.integer "tournament_id"
   end
 
   create_table "tournaments", :force => true do |t|

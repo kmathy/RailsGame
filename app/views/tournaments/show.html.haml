@@ -13,22 +13,16 @@
   %b Nb players max:
   = @tournament.nb_players_max
 - if can? :update, @tournament
-  = link_to 'Add Match', new_match_path(@tournament.id)
-  |
   = link_to 'Add Games', show_games_path(@tournament.id)
   |
   = link_to 'Edit', edit_tournament_path(@tournament)
   |
 = link_to 'Back', tournaments_path
-- if @tournament.users.include?(@current_user)
-  %p
-    you're already signed in for this tournament
-- else
-  = form_for @tournament, url: add_player_path, method: :post do |f|
-    = f.hidden_field 'tournament_id', :value => @tournament.id
-    = f.submit 'Sign in'
 
-= link_to 'Seed players', seed_players_path(@tournament.id), method: :post
+= form_for @tournament, url: add_player_path, method: :post do |f|
+  = f.hidden_field 'tournament_id', :value => @tournament.id
+  = f.collection_select('games', @tournament.games, :id, :title, :prompt => 'select game')
+  = f.submit 'Sign in'
 
 - if @tournament.users.any?
   %ul.list-group
@@ -43,7 +37,19 @@
   - @tournament.games.each do |game|
     %h2
       = game.title
-      = link_to 'Sign in all players'
+    - if game.matches.any?
+      %ul.list-group
+        - game.matches.each do |match|
+          - if match.player_1 != nil && match.player_2 != nil
+            %li.list-group-item
+              = link_to "#{User.find(match.player_1.id).pseudo} VS #{User.find(match.player_2.id).pseudo}", show_match_path(match.id)
+          - else
+            %p
+              Too few players for a match
+    - else
+      %p
+        No matches found for this game
+
 - else
   %p
     No games for this tournament. A new game will be added rapidly.

@@ -1,5 +1,7 @@
 RailsGame::Application.routes.draw do
 
+
+
   devise_for :admin_users, ActiveAdmin::Devise.config
 
   ActiveAdmin.routes(self)
@@ -42,8 +44,12 @@ RailsGame::Application.routes.draw do
   match 'seed_tournament'       => 'tournaments#seed',          via: :post,   :as => 'seed_tournaments'
   match 'seed_players/:id'      => 'tournaments#seed_players',  via: :post,   :as => 'seed_players'
 
+
+  # MATCH
   #custom routes
-  match 'new_match/:id'         => 'matches#new',               via: :get,    :as => 'new_match'
+  match 'match/:id/show'        => 'match#show',                via: :get,    :as => 'show_match'
+  match 'match/:id/edit'        => 'match#edit',                via: :get,    :as => 'edit_match'
+  match 'match/:id/show'        => 'match#update',              via: :post,   :as => 'update_match'
 
   resources :games
 
