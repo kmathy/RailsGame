@@ -84,6 +84,12 @@ class GamesController < ApplicationController
     end
   end
 
+  def rate
+    @game = Game.find(params[:id])
+    @game.rate(params[:stars], current_user, params[:dimension])
+    render :show
+  end
+
   def seed
     for i in 0..5
       Game.create(:title => "Game n°#{i}", :description => "Description longue", :genre => "genre")

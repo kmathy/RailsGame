@@ -3,8 +3,11 @@
   %head
     %title RailsGame
     = stylesheet_link_tag "application", :media => "all"
+    = stylesheet_link_tag "ajaxful_rating"
     = stylesheet_link_tag "typeahead"
     = javascript_include_tag "application"
+    = javascript_include_tag :defaults
+    = ajaxful_rating_style
     = csrf_meta_tags
   %body
     .navbar.navbar-default.navbar-fixed-top

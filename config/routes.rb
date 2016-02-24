@@ -48,9 +48,15 @@ RailsGame::Application.routes.draw do
   # MATCH
   resources :matches
 
-  match 'start_matches'     => 'matches#start_matches',     via: :post,   :as => 'start_matches'
+  match 'start_matches'         => 'matches#start_matches',     via: :post,   :as => 'start_matches'
 
   resources :games
+
+  resources :games do
+     member do
+       post :rate
+     end
+  end
 
   match 'seed_games'            => 'games#seed',                via: :post,   :as => 'seed_games'
 

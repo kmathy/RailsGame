@@ -8,6 +8,11 @@
 %p
   %b Genre:
   = @game.genre
+
+%p
+  = ratings_for @game
+
+
 = link_to 'Edit', edit_game_path(@game)
 |
 \#{link_to 'Back', games_path}

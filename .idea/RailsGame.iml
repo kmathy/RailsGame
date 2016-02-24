@@ -275,6 +275,7 @@
     <orderEntry type="library" scope="PROVIDED" name="activerecord (v3.2.11, RVM: ruby-2.1.7) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="activeresource (v3.2.11, RVM: ruby-2.1.7) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="activesupport (v3.2.11, RVM: ruby-2.1.7) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="ajaxful_rating (v3.0.0.beta8, RVM: ruby-2.1.7) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="arbre (v1.0.3, RVM: ruby-2.1.7) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="arel (v3.0.3, RVM: ruby-2.1.7) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="bcrypt (v3.1.10, RVM: ruby-2.1.7) [gem]" level="application" />

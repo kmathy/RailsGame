@@ -71,3 +71,6 @@ gem 'twitter-typeahead-rails'
 # Admin
 gem 'formtastic', '< 3'
 gem 'activeadmin', '~> 0.6.6'
+
+# Rating games
+gem 'ajaxful_rating', '>= 3.0.0.beta8'
