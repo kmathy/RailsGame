@@ -1,0 +1,9 @@
+%h1 Hey #{@user.pseudo}!
+
+%h3 You did it! You won your match #{@match.game.title} in the tournament "#{@match.tournament.name}"
+
+%p
+  You can see the results in the following link:
+
+%p
+  = link_to "#{@match.player_1.pseudo} VS #{@match.player_2.pseudo}", match_url(@match)

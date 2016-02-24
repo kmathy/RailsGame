@@ -1,0 +1,12 @@
+%h1 Dear #{@user.first_name} #{@user.last_name},
+
+%p
+  you just joined this following tournament:
+
+%p.text-center
+  #{@tournament.name}, #{@tournament.place}
+
+%p
+  = link_to "Click here if you want to see this tournament", tournament_url(@tournament)
+
+

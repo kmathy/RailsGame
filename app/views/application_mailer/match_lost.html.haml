@@ -1,0 +1,10 @@
+%h1 Dear #{@user.pseudo},
+
+%p
+  It's a sad day today... You lost your match!
+  It's time to rally all your concentration and begin a new match!
+
+%p
+  See the results in the following link:
+%p
+  = link_to "#{@match.player_1.pseudo} VS #{@match.player_2.pseudo}", match_url(@match)

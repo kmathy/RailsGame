@@ -93,7 +93,13 @@ class TournamentsController < ApplicationController
 
     user.games.push(game) unless user.games.include?(game)
     game.users.push(user) unless game.users.include?(user)
-    tournament.users.push(user) unless tournament.users.include?(user)
+    #tournament.users.push(user) unless tournament.users.include?(user)
+    if tournament.users.exclude?(user)
+      tournament.users.push(user)
+      ApplicationMailer.sign_in_tournament(user,tournament).deliver
+    end
+
+    ApplicationMailer.sign_in_tournament_game(user,tournament,game).deliver
 
     PendingPlayer.create(:tournament_id => tournament.id, :game_id => game.id, :player_id => user.id)
 
