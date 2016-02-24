@@ -72,7 +72,7 @@ Searcher.prototype = new function() {
 
   // function longMatchRegexp(index, longIndex, regexps) {
   //     for (var i = regexps.length - 1; i >= 0; i--){
-  //         if (!index.match(regexps[i]) && !longIndex.match(regexps[i])) return false;
+  //         if (!index.matches(regexps[i]) && !longIndex.matches(regexps[i])) return false;
   //     };
   //     return true;
   // }

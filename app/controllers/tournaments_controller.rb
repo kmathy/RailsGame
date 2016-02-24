@@ -18,7 +18,7 @@ class TournamentsController < ApplicationController
   # GET /tournaments/1.json
   def show
     @tournament = Tournament.find(params[:id])
-
+    @pending_players = PendingPlayer.find_all_by_tournament_id(@tournament.id)
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @tournament }
@@ -88,22 +88,17 @@ class TournamentsController < ApplicationController
   # POST /add_player
   def add_player
     tournament = Tournament.find(params[:tournament][:tournament_id])
-    game = tournament.games.find(params[:tournament][:games])
+    game = tournament.games.find(params[:tournament][:game_id])
     user = User.find(session['warden.user.user.key'][0][0])
 
-    if game.users.include?(user)
-      redirect_to tournament_path(:id => tournament.id)
-    else
-      user.games.push(game) unless user.games.include?(game)
-      game.users.push(user) unless game.users.include?(user)
-      tournament.users.push(user) unless tournament.users.include?(user)
+    user.games.push(game) unless user.games.include?(game)
+    game.users.push(user) unless game.users.include?(user)
+    tournament.users.push(user) unless tournament.users.include?(user)
 
-      create_or_update_match(game, tournament, user)
+    PendingPlayer.create(:tournament_id => tournament.id, :game_id => game.id, :player_id => user.id)
 
-      redirect_to tournament_path(:id => tournament.id)
-    end
+    redirect_to tournament_path(:id => tournament.id)
   end
-
 
   # GET /show_games
   def show_games
@@ -120,7 +115,7 @@ class TournamentsController < ApplicationController
 
   def seed
     for i in 0..20
-      Tournament.create(:name => "Test n°#{i}", :nb_players_max => 5, :place => "Bruxelles Avenue Louise #{i}")
+      Tournament.create(:name => "Tournament n°#{i}", :nb_players_max => 5, :place => "Bruxelles Avenue Louise #{i}")
     end
     redirect_to tournaments_path
   end
@@ -133,21 +128,4 @@ class TournamentsController < ApplicationController
     end
     redirect_to tournament_path(params[:id])
   end
-
-  private
-
-  def create_or_update_match(game, tournament, user)
-    if game.matches.any?
-      game.matches.each do |match| # iterate each existing matches
-        if match.player_1 != nil && match.player_2 == nil
-          match.player_2 = user
-          tournament.matches.push(Match.create(:player_1 => user, :game => game))
-        end
-      end
-    else
-      match = Match.create(:player_1 => user, :game => game)
-      tournament.matches.push(match)
-    end
-  end
-
 end

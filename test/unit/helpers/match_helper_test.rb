@@ -1,4 +1,4 @@
 require 'test_helper'
 
-class MatchHelperTest < ActionView::TestCase
+class MatchesHelperTest < ActionView::TestCase
 end

@@ -1,0 +1,17 @@
+%h1
+  = @match.game.title
+%h2
+  = @match.player_1.pseudo
+  VS
+  = @match.player_2.pseudo
+.container-form
+  = form_for @match do |f|
+    .form-group
+      = f.label :score_1, "Score #{@match.player_1.pseudo}"
+      = f.text_field :score_1, :class => 'form-control'
+
+    .form-group
+      = f.label :score_2, "Score #{@match.player_2.pseudo}"
+      = f.text_field :score_2, :class => 'form-control'
+    .form-group
+      = f.submit :class => 'btn btn-info'

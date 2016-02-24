@@ -12,17 +12,13 @@
 %p
   %b Nb players max:
   = @tournament.nb_players_max
+
 - if can? :update, @tournament
   = link_to 'Add Games', show_games_path(@tournament.id)
   |
   = link_to 'Edit', edit_tournament_path(@tournament)
   |
 = link_to 'Back', tournaments_path
-
-= form_for @tournament, url: add_player_path, method: :post do |f|
-  = f.hidden_field 'tournament_id', :value => @tournament.id
-  = f.collection_select('games', @tournament.games, :id, :title, :prompt => 'select game')
-  = f.submit 'Sign in'
 
 - if @tournament.users.any?
   %ul.list-group
@@ -34,21 +30,31 @@
     No players for this tournament.
 
 - if @tournament.games.any?
-  - @tournament.games.each do |game|
-    %h2
-      = game.title
-    - if game.matches.any?
-      %ul.list-group
-        - game.matches.each do |match|
-          - if match.player_1 != nil && match.player_2 != nil
+  %ul.list-group
+    - @tournament.games.each do |game|
+      %h3
+        = game.title
+        - if @pending_players.exclude?(@current_player) && @tournament.matches.where("game_id = #{game.id}").empty?
+          = form_for @tournament, url: add_player_path, method: :post, html: {:class => 'form-inline'}  do |f|
+            = f.hidden_field 'tournament_id', :value => @tournament.id
+            = f.hidden_field 'game_id', :value => game.id
+            = f.submit 'Sign in', :class => 'btn btn-info'
+        - if can? @tournament, :update
+          - if @tournament.matches.where("game_id = #{game.id}").empty? && @pending_players.second != nil
+            = link_to 'Start Matches', start_matches_path(:t_id => @tournament.id, :g_id => game.id), :method => :post
+
+      - if @pending_players.any? && @tournament.matches.where("game_id = #{game.id}").empty?
+        %h4 Players subscribed
+        %ul.list-group
+          - @pending_players.each do |pend_player|
+            - if pend_player.game_id == game.id
+              %li.list-group-item
+                = User.find(pend_player.player_id).pseudo
+      - if @tournament.matches.where("game_id = #{game.id}").any?
+        %ul.list-group
+          - @tournament.matches.where("game_id = #{game.id}").each do |match|
             %li.list-group-item
-              = link_to "#{User.find(match.player_1.id).pseudo} VS #{User.find(match.player_2.id).pseudo}", show_match_path(match.id)
-          - else
-            %p
-              Too few players for a match
-    - else
-      %p
-        No matches found for this game
+              = link_to "#{match.player_1.pseudo} VS #{match.player_2.pseudo}", match_path(match)
 
 - else
   %p

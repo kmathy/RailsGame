@@ -16,15 +16,15 @@ class MatchesControllerTest < ActionController::TestCase
     assert_response :success
   end
 
-  test "should create match" do
+  test "should create matches" do
     assert_difference('Match.count') do
-      post :create, match: { points: @match.points, score: @match.score }
+      post :create, matches: {points: @match.points, score: @match.score }
     end
 
-    assert_redirected_to match_path(assigns(:match))
+    assert_redirected_to match_path(assigns(:matches))
   end
 
-  test "should show match" do
+  test "should show matches" do
     get :show, id: @match
     assert_response :success
   end
@@ -34,12 +34,12 @@ class MatchesControllerTest < ActionController::TestCase
     assert_response :success
   end
 
-  test "should update match" do
-    put :update, id: @match, match: { points: @match.points, score: @match.score }
-    assert_redirected_to match_path(assigns(:match))
+  test "should update matches" do
+    put :update, id: @match, matches: {points: @match.points, score: @match.score }
+    assert_redirected_to match_path(assigns(:matches))
   end
 
-  test "should destroy match" do
+  test "should destroy matches" do
     assert_difference('Match.count', -1) do
       delete :destroy, id: @match
     end

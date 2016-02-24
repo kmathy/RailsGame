@@ -46,25 +46,23 @@ RailsGame::Application.routes.draw do
 
 
   # MATCH
-  #custom routes
-  match 'match/:id/show'        => 'match#show',                via: :get,    :as => 'show_match'
-  match 'match/:id/edit'        => 'match#edit',                via: :get,    :as => 'edit_match'
-  match 'match/:id/show'        => 'match#update',              via: :post,   :as => 'update_match'
+  resources :matches
+
+  match 'start_matches'     => 'matches#start_matches',     via: :post,   :as => 'start_matches'
 
   resources :games
 
   match 'seed_games'            => 'games#seed',                via: :post,   :as => 'seed_games'
 
-
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
   # Sample of regular route:
-  #   match 'products/:id' => 'catalog#view'
+  #   matches 'products/:id' => 'catalog#view'
   # Keep in mind you can assign values other than :controller and :action
 
   # Sample of named route:
-  #   match 'products/:id/purchase' => 'catalog#purchase', :as => :purchase
+  #   matches 'products/:id/purchase' => 'catalog#purchase', :as => :purchase
   # This route can be invoked with purchase_url(:id => product.id)
 
   # Sample resource route (maps HTTP verbs to controller actions automatically):
@@ -111,5 +109,5 @@ RailsGame::Application.routes.draw do
 
   # This is a legacy wild controller route that's not recommended for RESTful applications.
   # Note: This route will make all actions in every controller accessible via GET requests.
-  # match ':controller(/:action(/:id))(.:format)'
+  # matches ':controller(/:action(/:id))(.:format)'
 end

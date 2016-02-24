@@ -1,0 +1,19 @@
+%h1
+  = @match.player_1.pseudo
+  = @match.player_2.pseudo
+
+%p
+  Score
+  = @match.player_1.pseudo
+  %span.text-info
+    = @match.score_1
+%p
+  Score
+  = @match.player_2.pseudo
+  %span.text-info
+    = @match.score_2
+- if @match.score_1 == nil
+  %p
+    = link_to "finish matches", edit_match_path(@match), :class => 'btn btn-info'
+%p
+  = link_to "back", tournament_path(@match.tournament.id)

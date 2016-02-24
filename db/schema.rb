@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20160222160338) do
+ActiveRecord::Schema.define(:version => 20160223160631) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.string   "namespace"
@@ -64,13 +64,22 @@ ActiveRecord::Schema.define(:version => 20160222160338) do
   end
 
   create_table "matches", :force => true do |t|
-    t.integer "points"
     t.integer "player_1"
     t.integer "player_2"
     t.integer "score_1"
     t.integer "score_2"
     t.integer "game_id"
     t.integer "tournament_id"
+    t.integer "points_1"
+    t.integer "points_2"
+  end
+
+  create_table "pending_players", :force => true do |t|
+    t.integer  "tournament_id"
+    t.integer  "game_id"
+    t.integer  "player_id"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
   end
 
   create_table "tournaments", :force => true do |t|

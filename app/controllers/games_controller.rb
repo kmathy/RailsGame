@@ -86,7 +86,7 @@ class GamesController < ApplicationController
 
   def seed
     for i in 0..5
-      Game.create(:title => "Test n°#{i}", :description => "Description longue", :genre => "genre")
+      Game.create(:title => "Game n°#{i}", :description => "Description longue", :genre => "genre")
     end
     redirect_to games_path
   end
