@@ -28,7 +28,8 @@ class MatchesController < ApplicationController
     else # nobody wins
       @match.points_1 = 1
       @match.points_2 = 1
-      ApplicationMailer.match_equality(@match).deliver
+      ApplicationMailer.match_equality(@match, @match.player_1).deliver
+      ApplicationMailer.match_equality(@match, @match.player_2).deliver
     end
     if @match.save
       redirect_to @match

@@ -1,5 +1,5 @@
 class ApplicationMailer < ActionMailer::Base
-  default from: "from@example.com"
+  default from: "Admin@Railsgame.com"
 
   def sign_in_tournament(user, tournament)
     @user = user
@@ -26,9 +26,9 @@ class ApplicationMailer < ActionMailer::Base
     mail(to: @user.email, subject: 'Unfortunately, you lost...')
   end
 
-  def match_equality(match)
+  def match_equality(match, user)
     @match = match
-    mail(to: @match.player_1.email, subject: 'Equality!')
-    mail(to: @match.player_2.email, subject: 'Equality!')
+    @user = user
+    mail(to: @user.email, subject: 'Equality!')
   end
 end
