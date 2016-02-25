@@ -12,15 +12,15 @@ class MatchesController < ApplicationController
     @match.score_1 = params[:match][:score_1]
     @match.score_2 = params[:match][:score_2]
     if @match.score_1 > @match.score_2 #player_1 wins
-      @match.player_1.increment(:nb_victory).save
-      @match.player_2.increment(:nb_defeat).save
+      @match.player_1.increment!(:nb_victory)
+      @match.player_2.increment!(:nb_defeat)
       @match.points_1 = 3
       @match.points_2 = 0
       ApplicationMailer.match_lost(@match, @match.player_2).deliver
       ApplicationMailer.match_won(@match, @match.player_1).deliver
     elsif @match.score_1 < @match.score_2 # player_2 wins
-      @match.player_1.increment(:nb_defeat).save
-      @match.player_2.increment(:nb_victory).save
+      @match.player_1.increment!(:nb_defeat)
+      @match.player_2.increment!(:nb_victory)
       @match.points_1 = 0
       @match.points_2 = 3
       ApplicationMailer.match_lost(@match, @match.player_1).deliver
@@ -31,6 +31,8 @@ class MatchesController < ApplicationController
       ApplicationMailer.match_equality(@match, @match.player_1).deliver
       ApplicationMailer.match_equality(@match, @match.player_2).deliver
     end
+    @match.player_1.increment!(:total_points, @match.points_1)
+    @match.player_2.increment!(:total_points, @match.points_2)
     if @match.save
       redirect_to @match
     end

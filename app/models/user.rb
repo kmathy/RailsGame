@@ -13,6 +13,7 @@ class User < ActiveRecord::Base
   attr_accessible :email, :password, :password_confirmation, :remember_me
   attr_accessible :country, :nb_defeat, :nb_victory, :total_points
   attr_accessible :pseudo, :last_name, :first_name, :avatar, :role
+  attr_accessible :matches_1, :matches_2
 
   # Ability constants
 

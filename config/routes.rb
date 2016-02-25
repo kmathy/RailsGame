@@ -1,7 +1,5 @@
 RailsGame::Application.routes.draw do
 
-
-
   devise_for :admin_users, ActiveAdmin::Devise.config
 
   ActiveAdmin.routes(self)
@@ -59,6 +57,10 @@ RailsGame::Application.routes.draw do
   end
 
   match 'seed_games'            => 'games#seed',                via: :post,   :as => 'seed_games'
+
+  #Stats
+
+  resources :stats
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

@@ -2,17 +2,14 @@
 %html
   %head
     %title RailsGame
-    = stylesheet_link_tag "application", :media => "all"
-    = stylesheet_link_tag "ajaxful_rating"
     = stylesheet_link_tag "typeahead"
     = javascript_include_tag "application"
-    = ajaxful_rating_style
     = csrf_meta_tags
   %body
-    .navbar.navbar-default.navbar-fixed-top
+    .navbar.navbar-inverse.navbar-fixed-top
       - if logged_in?
         .navbar-header
-          %a.navbar-brand{:href => "#"}
+          %a.navbar-brand{:href => show_user_path}
             = image_tag @current_user.avatar_url, :class => 'img-circle'
       .container-fluid
         .collapse.navbar-collapse
@@ -54,7 +51,13 @@
               %a.dropdown-toggle{:href => "#", :data => {:toggle => 'dropdown'}, :role => "button"}
                 Matches
                 %b.caret
+            %li.dropdown
+              %a{:href => stats_path, :role => 'button'}
+                Stats
 
     .container
-      .text-danger= flash[:error]
       = yield
+  = stylesheet_link_tag "application", :media => "all"
+  = stylesheet_link_tag "ajaxful_rating"
+
+  = ajaxful_rating_style
