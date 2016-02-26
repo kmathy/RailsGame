@@ -1,26 +1,24 @@
-%p#notice= notice
-%p
-  %b Name:
+%div.h1.page-header.text-center
   = @tournament.name
-%p
-  %b Place:
-  = @tournament.place
-  = @tournament.to_coordinates
-%p
-  = image_tag "http://maps.google.com/maps/api/staticmap?size=450x300&sensor=false&zoom=16&markers=#{@tournament.latitude}%2C#{@tournament.longitude}"
-
-%p
-  %b Nb players max:
-  = @tournament.nb_players_max
-
-- if can? :update, @tournament
-  = link_to 'Add Games', show_games_path(@tournament.id)
-  |
-  = link_to 'Edit', edit_tournament_path(@tournament)
-  |
-= link_to 'Back', tournaments_path
+%div.row
+  %div.col-xs-6.jumbotron
+    %p.text-center
+      %u Place :
+    %p.text-center #{@tournament.place}
+    %p.text-center
+      %u Nb Players Max =
+    %p.text-center #{@tournament.nb_players_max}
+  %div.col-xs-6
+    %p.text-right
+      = image_tag "http://maps.google.com/maps/api/staticmap?size=450x300&sensor=false&zoom=16&markers=#{@tournament.latitude}%2C#{@tournament.longitude}"
+%p.text-center
+  - if can? :update, @tournament
+    = link_to 'Add Games', show_games_path(@tournament.id), :class => 'btn btn-primary'
+    = link_to 'Edit', edit_tournament_path(@tournament), class: 'btn btn-info'
+  = link_to 'Back', tournaments_path, :class => 'btn btn-success'
 
 - if @tournament.users.any?
+  %h3.text-center.page-header Users in the Tournament
   %ul.list-group
     - @tournament.users.each do |player|
       %li.list-group-item
@@ -30,31 +28,45 @@
     No players for this tournament.
 
 - if @tournament.games.any?
+  %h3.text-center.page-header Game(s) available
   %ul.list-group
     - @tournament.games.each do |game|
-      %h3
-        = game.title
-        - if @pending_players.exclude?(@current_player) && @tournament.matches.where("game_id = #{game.id}").empty?
-          = form_for @tournament, url: add_player_path, method: :post, html: {:class => 'form-inline'}  do |f|
-            = f.hidden_field 'tournament_id', :value => @tournament.id
-            = f.hidden_field 'game_id', :value => game.id
-            = f.submit 'Sign in', :class => 'btn btn-info'
-        - if can? @tournament, :update
-          - if @tournament.matches.where("game_id = #{game.id}").empty?
-            = link_to 'Start Matches', start_matches_path(:t_id => @tournament.id, :g_id => game.id), :method => :post
-
-      - if @pending_players.any? && @tournament.matches.where("game_id = #{game.id}").empty?
-        %h4 Players subscribed
-        %ul.list-group
-          - @pending_players.each do |pend_player|
-            - if pend_player.game_id == game.id
-              %li.list-group-item
-                = User.find(pend_player.player_id).pseudo
-      - if @tournament.matches.where("game_id = #{game.id}").any?
-        %ul.list-group
-          - @tournament.matches.where("game_id = #{game.id}").each do |match|
-            %li.list-group-item
-              = link_to "#{match.player_1.pseudo} VS #{match.player_2.pseudo}", match_path(match)
+      %div.panel-group#accordion{:role => 'tablist', :aria => {:multiselectable => true}}
+        %div.panel.panel-default
+          %div.panel-heading{:role => 'tab', :id => "heading#{game.id}"}
+            %h3.panel-title
+              %a{:data => {:toggle => 'collapse', :parent => '#accordion'}, :href => "#collapse#{game.id}", :aria => {:expanded => true, :controls => "collapse#{game.id}"}}
+                = game.title
+          %div.panel-collapse.collapse{:id => "collapse#{game.id}", :role => "tabpanel", :aria => {:labelledby => "heading#{game.id}"}}
+            %div.panel-body
+              - if @pending_players.where("game_id = #{game.id} AND player_id = #{@current_user.id}").empty?
+                - if @tournament.matches.where("game_id = #{game.id}").empty?
+                  - if @pending_players.where("game_id = #{game.id}").count <= @tournament.nb_players_max
+                    .text-danger
+                      = flash[:error]
+                    = form_for @tournament, url: add_player_path, method: :post, html: {:class => 'form-inline'}  do |f|
+                      = f.hidden_field 'tournament_id', :value => @tournament.id
+                      = f.hidden_field 'game_id', :value => game.id
+                      = f.submit 'Sign in', :class => 'btn btn-info'
+              - if can? @tournament, :update
+                - if @pending_players.where("game_id = #{game.id}").count >= 2
+                  = link_to 'Start Matches', start_matches_path(:t_id => @tournament.id, :g_id => game.id), :method => :post, :class => 'btn btn-success'
+              - if @pending_players.any? && @tournament.matches.where("game_id = #{game.id}").empty?
+                %h4 Players subscribed
+                %ul.list-group
+                  - @pending_players.each do |pend_player|
+                    - if pend_player.game_id == game.id
+                      %li.list-group-item
+                        = User.where("id = #{pend_player.player_id}").first.pseudo
+              - if @tournament.matches.where("game_id = #{game.id}").any?
+                %ul.list-group
+                  - @tournament.matches.where("game_id = #{game.id}").each do |match|
+                    - if match.score_1 == nil
+                      %li.list-group-item
+                        = link_to "#{match.player_1.pseudo} VS #{match.player_2.pseudo}", match_path(match), :class => 'btn btn-info'
+                    - else
+                      %li.list-group-item
+                        = link_to "#{match.player_1.pseudo} VS #{match.player_2.pseudo}", match_path(match), :class => 'btn btn-success'
 
 - else
   %p

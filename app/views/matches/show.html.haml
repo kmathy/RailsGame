@@ -1,17 +1,20 @@
-%h1
-  = @match.player_1.pseudo
-  = @match.player_2.pseudo
-
-%p
-  Score
-  = @match.player_1.pseudo
-  %span.text-info
-    = @match.score_1
-%p
-  Score
-  = @match.player_2.pseudo
-  %span.text-info
-    = @match.score_2
+%div
+  %h1.text-center #{@match.player_1.pseudo} VS #{@match.player_2.pseudo}
+%div.row.jumbotron
+  %div.row.jumbotron
+    %div.col-xs-5.text-center
+      = image_tag @match.player_1.avatar_url, :class => 'img img-circle'
+    %div.col-xs-2.text-center
+      %p VS
+    %div.col-xs-5.text-center
+      = image_tag @match.player_2.avatar_url, :class => 'img img-circle right'
+  %div.row
+    %div.col-xs-5.text-center
+      %p #{@match.score_1}
+    %div.col-xs-2.text-center
+      %p -
+    %div.col-xs-5.text-center
+      %p #{@match.score_2}
 - if @match.score_1 == nil
   %p
     = link_to "finish matches", edit_match_path(@match), :class => 'btn btn-info'

@@ -1,13 +1,15 @@
 class TournamentsController < ApplicationController
 
+  rescue_from ActiveRecord::RecordNotUnique, :with => :pending_already_exists
+
   before_filter :authenticate_user!
 
   # GET /tournaments
   # GET /tournaments.json
   def index
-    @q = Tournament.ransack(params[:q])
-    @q.sorts = 'name ASC' if @q.sorts.empty?
-    @tournaments = Kaminari.paginate_array(@q.result(distinct: true)).page(params[:page])
+    @query = Tournament.ransack(params[:q])
+    @query.sorts = 'name ASC' if @query.sorts.empty?
+    @tournaments = Kaminari.paginate_array(@query.result(distinct: true)).page(params[:page])
     respond_to do |format|
       format.html # index.html.haml
       format.json { render json: @tournaments }
@@ -18,7 +20,7 @@ class TournamentsController < ApplicationController
   # GET /tournaments/1.json
   def show
     @tournament = Tournament.find(params[:id])
-    @pending_players = PendingPlayer.find_all_by_tournament_id(@tournament.id)
+    @pending_players = PendingPlayer.where("tournament_id = #{params[:id]}")
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @tournament }
@@ -93,17 +95,16 @@ class TournamentsController < ApplicationController
 
     user.games.push(game) unless user.games.include?(game)
     game.users.push(user) unless game.users.include?(user)
-    #tournament.users.push(user) unless tournament.users.include?(user)
     if tournament.users.exclude?(user)
       tournament.users.push(user)
-      ApplicationMailer.sign_in_tournament(user,tournament).deliver
+      ApplicationMailer.sign_in_tournament(user, tournament).deliver
     end
 
-    ApplicationMailer.sign_in_tournament_game(user,tournament,game).deliver
-
-    PendingPlayer.create(:tournament_id => tournament.id, :game_id => game.id, :player_id => user.id)
-
-    redirect_to tournament_path(:id => tournament.id)
+    pp = PendingPlayer.new(:tournament_id => tournament.id, :game_id => game.id, :player_id => user.id)
+    if pp.save
+      ApplicationMailer.sign_in_tournament_game(user, tournament, game).deliver
+      redirect_to tournament_path(:id => tournament.id)
+    end
   end
 
   # GET /show_games
@@ -134,4 +135,12 @@ class TournamentsController < ApplicationController
     end
     redirect_to tournament_path(params[:id])
   end
+
+  private
+
+  def pending_already_exists
+    flash[:error] = 'You\'re already signed in for this game'
+    redirect_to :back
+  end
+
 end

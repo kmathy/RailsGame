@@ -5,7 +5,7 @@
   - @places.push(tournament.place)
 
 
-= search_form_for @q, :class => 'form-inline search', :id => '' do |f|
+= search_form_for @query, :class => 'form-inline search', :id => '' do |f|
   .form-group
     = f.search_field :place_cont, :class => 'form-control', :id => 'myInput', :placeholder => 'Place ex: Avenue Louise'
   = f.submit 'Search', class: 'btn btn-primary glyphicon glyphicon-search'

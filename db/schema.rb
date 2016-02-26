@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20160224132624) do
+ActiveRecord::Schema.define(:version => 20160225135255) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.string   "namespace"
@@ -82,6 +82,8 @@ ActiveRecord::Schema.define(:version => 20160224132624) do
     t.datetime "updated_at",    :null => false
   end
 
+  add_index "pending_players", ["tournament_id", "game_id", "player_id"], :name => "index_unique_game_tournament_player_IDs", :unique => true
+
   create_table "rates", :force => true do |t|
     t.integer  "rater_id"
     t.integer  "rateable_id"
@@ -128,9 +130,9 @@ ActiveRecord::Schema.define(:version => 20160224132624) do
 
   create_table "users", :force => true do |t|
     t.string   "country"
-    t.integer  "nb_victory"
-    t.integer  "nb_defeat"
-    t.integer  "total_points"
+    t.integer  "nb_victory",             :default => 0
+    t.integer  "nb_defeat",              :default => 0
+    t.integer  "total_points",           :default => 0
     t.datetime "created_at",                             :null => false
     t.datetime "updated_at",                             :null => false
     t.string   "first_name"
@@ -153,7 +155,7 @@ ActiveRecord::Schema.define(:version => 20160224132624) do
     t.string   "avatar"
     t.string   "provider"
     t.string   "uid"
-    t.string   "role"
+    t.string   "role",                   :default => "player"
   end
 
   add_index "users", ["confirmation_token"], :name => "index_users_on_confirmation_token", :unique => true

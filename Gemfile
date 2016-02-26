@@ -74,3 +74,4 @@ gem 'activeadmin', '~> 0.6.6'
 
 # Rating games
 gem 'ajaxful_rating', '>= 3.0.0.beta8'
+
