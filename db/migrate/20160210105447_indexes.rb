@@ -17,11 +17,5 @@ class Indexes < ActiveRecord::Migration
     add_column :users, :email, :string
     add_index :users, :total_points
 
-    add_index :tournament_users, :player_id
-    add_index :tournament_users, :tournament_id
-
-    add_index :tournament_games, :game_id
-    add_index :tournament_games, :tournament_id
-
   end
 end
