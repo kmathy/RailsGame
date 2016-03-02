@@ -1,0 +1,11 @@
+$('#score_1').remove();
+$('#score_2').remove();
+
+$('#result_1').fadeIn(800, function(){
+  $(this).append("<%= @match.score_1 %>");
+});
+$('#result_2').fadeIn(800, function(){
+  $(this).append("<%= @match.score_2 %>");
+});
+
+$('.update').remove();

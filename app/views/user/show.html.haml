@@ -16,6 +16,9 @@
 %p
   %b last connexion:
   = @user.last_sign_in_at.to_datetime.to_formatted_s(:short)
+
+%p
+  = image_tag "http://maps.google.com/maps/api/staticmap?size=450x300&sensor=false&zoom=16&markers=#{@user.latitude}%2C#{@user.longitude}"
 %h3
   Games played:
 %ul.list-group

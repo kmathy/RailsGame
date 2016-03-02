@@ -1,20 +1,31 @@
 %h1 Listing tournaments
 
 - @places = []
+- @names = []
 - Tournament.all.each do |tournament|
   - @places.push(tournament.place)
-
+  - @names.push(tournament.name)
 
 = search_form_for @query, :class => 'form-inline search', :id => '' do |f|
   .form-group
     = f.search_field :place_cont, :class => 'form-control', :id => 'myInput', :placeholder => 'Place ex: Avenue Louise'
+  OR
+  .form-group
+    = f.search_field :name_cont, :class => 'form-control', :id => 'names', :placeholder => 'Name ex: Tournament n°1'
   = f.submit 'Search', class: 'btn btn-primary glyphicon glyphicon-search'
 
 :javascript
   var places = #{@places}
+  var names = #{@names}
   $(document).ready(function(){
     var bh = new Bloodhound({
         local: places,
+        queryTokenizer: Bloodhound.tokenizers.whitespace,
+        datumTokenizer: Bloodhound.tokenizers.whitespace
+    });
+
+    var bhNames = new Bloodhound({
+        local: names,
         queryTokenizer: Bloodhound.tokenizers.whitespace,
         datumTokenizer: Bloodhound.tokenizers.whitespace
     });
@@ -25,32 +36,42 @@
       highlight:true
     },
     {
-      name: "testData",
+      name: "testDataPlace",
       source: bh
+    });
+
+    $('#names').typeahead({
+      hint: true,
+      highlight:true
+    },
+    {
+      name: "testDataName",
+      source: bhNames
     });
   });
 
 %table.table.table-hover.table-bordered
   %thead
-    %th Name
-    %th Place
-    %th Nb players max
-    %th
-    - if can? :update, @tournaments
-      %th
-    - if can? :destroy, @tournaments
-      %th
-  - @tournaments.each do |tournament|
     %tr
-      %td= tournament.name
-      %td= tournament.place
-      %td= tournament.nb_players_max
-      %td= link_to 'Show', tournament
+      %th Name
+      %th Place
+      %th Nb players max
+      %th
       - if can? :update, @tournaments
-        %td= link_to 'Edit', edit_tournament_path(tournament)
+        %th
       - if can? :destroy, @tournaments
-        %td= link_to 'Destroy', tournament, method: :delete, data: {confirm: 'Are you sure?'}
-%table.table.table-bordered.table-hover
+        %th
+  %tbody
+    - @tournaments.each do |tournament|
+      %tr
+        %td= tournament.name
+        %td= tournament.place
+        %td= tournament.nb_players_max
+        %td= link_to 'Show', tournament
+        - if can? :update, @tournaments
+          %td= link_to 'Edit', edit_tournament_path(tournament)
+        - if can? :destroy, @tournaments
+          %td= link_to 'Destroy', tournament, method: :delete, data: {confirm: 'Are you sure?'}, :id => "del-#{tournament.id}", :remote => true
 %br/
 - if can? :create, @tournaments
   %p

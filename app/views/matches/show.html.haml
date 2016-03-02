@@ -1,22 +1,27 @@
 %div
   %h1.text-center #{@match.player_1.pseudo} VS #{@match.player_2.pseudo}
-%div.row.jumbotron
+
+= form_for @match, :html => {:remote => true } do |f|
   %div.row.jumbotron
-    %div.col-xs-5.text-center
-      = image_tag @match.player_1.avatar_url, :class => 'img img-circle'
-    %div.col-xs-2.text-center
-      %p VS
-    %div.col-xs-5.text-center
-      = image_tag @match.player_2.avatar_url, :class => 'img img-circle right'
-  %div.row
-    %div.col-xs-5.text-center
-      %p #{@match.score_1}
-    %div.col-xs-2.text-center
-      %p -
-    %div.col-xs-5.text-center
-      %p #{@match.score_2}
-- if @match.score_1 == nil
-  %p
-    = link_to "finish matches", edit_match_path(@match), :class => 'btn btn-info'
+    %div.row.jumbotron
+      %div.col-xs-5.text-center
+        = image_tag @match.player_1.avatar_url, :class => 'img img-circle'
+      %div.col-xs-2.text-center
+        %p VS
+      %div.col-xs-5.text-center
+        = image_tag @match.player_2.avatar_url, :class => 'img img-circle right'
+    %div.row
+      %div.col-xs-5.text-center
+        - if @match.score_1 == nil
+          = f.text_field :score_1, id: 'score_1'
+        %p#result_1 #{@match.score_1}
+      %div.col-xs-2.text-center
+        %p -
+      %div.col-xs-5.text-center
+        - if @match.score_2 == nil
+          = f.text_field :score_2, id: 'score_2'
+        %p#result_2 #{@match.score_2}
+  - if @match.score_1 == nil
+    = f.submit 'Finish Match', class: 'btn btn-info update'
 %p
-  = link_to "back", tournament_path(@match.tournament.id)
+  = link_to "back", tournament_path(@match.tournament.id), class: 'btn btn-default'

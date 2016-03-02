@@ -28,6 +28,10 @@
       %br/
       = f.country_select :country, only: ['BE','LUX','FR','GB','DE','RU','ES','CH']
     .form-group
+      = f.label :town
+      %br/
+      = f.text_field :town, class: 'form-control'
+    .form-group
       = f.label :password
       - if @minimum_password_length
         %em

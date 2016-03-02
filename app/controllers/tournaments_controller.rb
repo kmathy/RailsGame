@@ -2,6 +2,9 @@ class TournamentsController < ApplicationController
 
   rescue_from ActiveRecord::RecordNotUnique, :with => :pending_already_exists
 
+  #respond_to :html, :js
+
+  before_filter :find_tournament, :only => [:show, :edit, :update, :destroy, :show_games, :seed_players]
   before_filter :authenticate_user!
 
   # GET /tournaments
@@ -19,7 +22,6 @@ class TournamentsController < ApplicationController
   # GET /tournaments/1
   # GET /tournaments/1.json
   def show
-    @tournament = Tournament.find(params[:id])
     @pending_players = PendingPlayer.where("tournament_id = #{params[:id]}")
     respond_to do |format|
       format.html # show.html.erb
@@ -40,7 +42,6 @@ class TournamentsController < ApplicationController
 
   # GET /tournaments/1/edit
   def edit
-    @tournament = Tournament.find(params[:id])
   end
 
   # POST /tournaments
@@ -62,8 +63,6 @@ class TournamentsController < ApplicationController
   # PUT /tournaments/1
   # PUT /tournaments/1.json
   def update
-    @tournament = Tournament.find(params[:id])
-
     respond_to do |format|
       if @tournament.update_attributes(params[:tournament])
         format.html { redirect_to @tournament, notice: 'Tournament was successfully updated.' }
@@ -78,12 +77,12 @@ class TournamentsController < ApplicationController
   # DELETE /tournaments/1
   # DELETE /tournaments/1.json
   def destroy
-    @tournament = Tournament.find(params[:id])
     @tournament.destroy
 
     respond_to do |format|
       format.html { redirect_to tournaments_url }
       format.json { head :no_content }
+      format.js
     end
   end
 
@@ -103,13 +102,16 @@ class TournamentsController < ApplicationController
     pp = PendingPlayer.new(:tournament_id => tournament.id, :game_id => game.id, :player_id => user.id)
     if pp.save
       ApplicationMailer.sign_in_tournament_game(user, tournament, game).deliver
-      redirect_to tournament_path(:id => tournament.id)
+      respond_to do |format|
+        format.html { redirect_to tournament_path(:id => tournament.id)}
+        format.js
+      end
     end
   end
 
   # GET /show_games
   def show_games
-    games = Tournament.find(params[:id]).games
+    games = @tournament.games
     @games = Game.all.reject { |game_tournament| games.any? { |game| game_tournament['title'].include?(game.title) } }
   end
 
@@ -129,14 +131,17 @@ class TournamentsController < ApplicationController
 
   def seed_players
     players = User.all
-    tournament = Tournament.find(params[:id])
     players.each do |player|
-      tournament.users.push(player)
+      @tournament.users.push(player)
     end
     redirect_to tournament_path(params[:id])
   end
 
   private
+
+  def find_tournament
+    @tournament = Tournament.find(params[:id])
+  end
 
   def pending_already_exists
     flash[:error] = 'You\'re already signed in for this game'

@@ -14,6 +14,19 @@ class User < ActiveRecord::Base
   attr_accessible :country, :nb_defeat, :nb_victory, :total_points
   attr_accessible :pseudo, :last_name, :first_name, :avatar, :role
   attr_accessible :matches_1, :matches_2
+  attr_accessible :town, :longitude, :latitude
+
+  # geocoder
+
+  geocoded_by :town
+  after_validation :geocode
+
+  reverse_geocoded_by :latitude, :longitude, :address => :town
+  after_validation :reverse_geocode
+
+  #def address
+  #  [country, town].compact.join(', ')
+  #end
 
   # Ability constants
 

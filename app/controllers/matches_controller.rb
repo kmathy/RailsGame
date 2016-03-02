@@ -34,7 +34,11 @@ class MatchesController < ApplicationController
     @match.player_1.increment!(:total_points, @match.points_1)
     @match.player_2.increment!(:total_points, @match.points_2)
     if @match.save
-      redirect_to @match
+      respond_to do |format|
+        format.html {redirect_to @match}
+        format.js
+      end
+
     end
   end
 

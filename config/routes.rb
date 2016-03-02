@@ -47,6 +47,7 @@ RailsGame::Application.routes.draw do
   resources :matches
 
   match 'start_matches'         => 'matches#start_matches',     via: :post,   :as => 'start_matches'
+  match 'matches/:id'           => 'matches#update',            via: :put,    :as => 'update_match'
 
   resources :games
 
