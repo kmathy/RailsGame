@@ -1,27 +1,29 @@
-%h1
-  Best Players (# victory)
+%ul.nav.nav-tabs.nav-justified
+  %li{:role => 'presentation'}
+    =link_to 'Best Players', best_players_path, :id => 'best_players'
+  %li{:role => 'presentation'}
+    =link_to 'Best Players (Tournament)', best_players_tournament_path, :id => 'best_players_tournament'
+  %li{:role => 'presentation'}
+    =link_to 'Best Players (Game)', best_players_game_path, :id => 'best_players_game'
+#content
+  .text-center
+    %h2.page-header
+      Welcome in the stats
+    %p
+      You can see here all the stats in our site RailsGame
+    %p
+      Here is the list of the stats you can view:
+    %h3.page-header
+      Best Players
+    %p
+      The best Players in the whole site
 
-%table.table.table-bordered
-  %thead
-    %tr
-      %th Pseudo
-      %th Victory
-  %tbody
-    - @users.sort_by{|e| -e[:nb_victory]}.each do |player|
-      %tr
-        %td #{player.pseudo}
-        %td #{player.nb_victory}
+    %h3.page-header
+      Best Players (Tournament)
+    %p
+      You can choose a tournament and view the best players for this tournament
 
-%h1
-  Best Players (# points)
-
-%table.table.table-bordered
-  %thead
-    %tr
-      %th Pseudo
-      %th Points
-  %tbody
-    - @users.sort_by{|e| -e[:total_points]}.each do |player|
-      %tr
-        %td #{player.pseudo}
-        %td #{player.total_points}
+    %h3.page-header
+      Best Players (Game)
+    %p
+      You can choose a game and for this game, there is a ranking in all the tournaments on the site

@@ -1,0 +1,28 @@
+#body
+  %h1
+    Best Players (# victory)
+
+  %table.table.table-bordered
+    %thead
+      %tr
+        %th Pseudo
+        %th Victory
+    %tbody
+      - @users.sort_by{|e| -e[:nb_victory]}.each do |player|
+        %tr
+          %td #{player.pseudo}
+          %td #{player.nb_victory}
+
+  %h1
+    Best Players (# points)
+
+  %table.table.table-bordered
+    %thead
+      %tr
+        %th Pseudo
+        %th Points
+    %tbody
+      - @users.sort_by{|e| -e[:total_points]}.each do |player|
+        %tr
+          %td #{player.pseudo}
+          %td #{player.total_points}

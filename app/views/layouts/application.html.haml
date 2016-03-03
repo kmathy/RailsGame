@@ -4,8 +4,10 @@
     %title RailsGame
     = stylesheet_link_tag "typeahead"
     = javascript_include_tag "application"
+    = favicon_link_tag
     = csrf_meta_tags
   %body
+    /BEGIN OF NAVIGATION
     .navbar.navbar-inverse.navbar-fixed-top
       - if logged_in?
         .navbar-header
@@ -21,9 +23,11 @@
                   %b.caret
                 %ul.dropdown-menu
                   %li
-                    = link_to 'Sign out', destroy_user_session_path, method: :delete
-                  %li
                     = link_to 'View Profile', show_user_path
+                  %li
+                    = link_to 'Favorites', favorites_path
+                  %li
+                    = link_to 'Sign out', destroy_user_session_path, method: :delete
             - else
               %li.active
                 = link_to 'Sign in', new_user_session_path
@@ -50,6 +54,7 @@
             %li.dropdown
               %a{:href => stats_path, :role => 'button'}
                 Stats
+      / END OF NAVIGATION
 
     .container
       = yield

@@ -25,4 +25,9 @@
   - @user.games.each do |game|
     %li.list-group-item
       = game.title
+      - if game.marked_as_favorite? :by => @user
+        %span.glyphicon.glyphicon-star{:aria =>{:hidden => true}}
+      - else
+        = link_to add_to_favorites_path(game.id), :method => :post, :remote => true, :id => "fav-#{game.id}" do
+          %span.glyphicon.glyphicon-star-empty{:aria => {:hidden => true}}
 %a.btn.btn-info.btn-lg{:href => edit_user_registration_path} Edit your profile

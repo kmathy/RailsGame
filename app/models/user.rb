@@ -32,6 +32,10 @@ class User < ActiveRecord::Base
 
   ROLES = %i[admin moderator player]
 
+  # marker
+
+  acts_as_marker
+
   # For avatar
   mount_uploader :avatar, AvatarUploader
 

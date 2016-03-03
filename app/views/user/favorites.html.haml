@@ -1,0 +1,13 @@
+%h1
+  Favorites Games
+
+- if @favorites.empty?
+  .jumbotron
+    %p.text-center
+      You have no favorite game :-(
+
+- else
+  %ul.list-group
+  - @favorites.each do |game|
+    %li.list-group-item
+      #{game.title}

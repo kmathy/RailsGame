@@ -67,11 +67,11 @@
         %td= tournament.name
         %td= tournament.place
         %td= tournament.nb_players_max
-        %td= link_to 'Show', tournament
+        %td= link_to 'Show', tournament, :class => 'btn btn-info btn-sm'
         - if can? :update, @tournaments
-          %td= link_to 'Edit', edit_tournament_path(tournament)
+          %td= link_to 'Edit', edit_tournament_path(tournament), :class => 'btn btn-warning btn-sm'
         - if can? :destroy, @tournaments
-          %td= link_to 'Destroy', tournament, method: :delete, data: {confirm: 'Are you sure?'}, :id => "del-#{tournament.id}", :remote => true
+          %td= link_to 'Destroy', tournament, method: :delete, data: {confirm: 'Are you sure?'}, :id => "del-#{tournament.id}", :remote => true, :class => 'btn btn-danger btn-sm'
 %br/
 - if can? :create, @tournaments
   %p

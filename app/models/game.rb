@@ -1,6 +1,8 @@
 class Game < ActiveRecord::Base
   attr_accessible :description, :title, :genre
 
+  markable_as :favorite
+
   ajaxful_rateable :stars => 10
 
   has_and_belongs_to_many :tournaments, :join_table => 'tournaments_games'

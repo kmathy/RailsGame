@@ -14,6 +14,8 @@ gem 'strong_parameters'
 group :assets do
   gem 'coffee-rails', '~> 3.2.1'
 
+  gem 'barista'
+
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
   gem 'therubyracer', :platforms => :ruby
 
@@ -74,4 +76,7 @@ gem 'activeadmin', '~> 0.6.6'
 
 # Rating games
 gem 'ajaxful_rating', '>= 3.0.0.beta8'
+
+# to put games in favorites
+gem 'markable'
 

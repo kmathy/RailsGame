@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20160301145344) do
+ActiveRecord::Schema.define(:version => 20160302125937) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.string   "namespace"
@@ -62,6 +62,18 @@ ActiveRecord::Schema.define(:version => 20160301145344) do
     t.integer "game_id"
     t.integer "user_id"
   end
+
+  create_table "marks", :id => false, :force => true do |t|
+    t.integer  "marker_id"
+    t.string   "marker_type"
+    t.integer  "markable_id"
+    t.string   "markable_type"
+    t.string   "mark",          :limit => 128
+    t.datetime "created_at"
+  end
+
+  add_index "marks", ["markable_id", "markable_type", "mark"], :name => "index_marks_on_markable_id_and_markable_type_and_mark"
+  add_index "marks", ["marker_id", "marker_type", "mark"], :name => "index_marks_on_marker_id_and_marker_type_and_mark"
 
   create_table "matches", :force => true do |t|
     t.integer "player_1"

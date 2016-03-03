@@ -26,7 +26,8 @@ RailsGame::Application.routes.draw do
   match 'profile'               => 'user#show',                 via: :get,    :as => 'show_user'
   match 'profile/update'        => 'user#edit',                 via: :get,    :as => 'edit_user'
   match 'profile/update'        => 'user#update',               via: :post,   :as => 'update_user'
-
+  match 'favorites'             => 'user#favorites',            via: :get,    :as => 'favorites'
+  match 'favorites/:id'         => 'user#add_to_favorites',     via: :post,   :as => 'add_to_favorites'
 
   resources :tournaments, only: :index do
     collection do
@@ -62,6 +63,12 @@ RailsGame::Application.routes.draw do
   #Stats
 
   resources :stats
+
+  match 'best_players'          => 'stats#best_players',        via: :get,    :as => 'best_players'
+  match 'best_players_tournament' => 'stats#best_players_tournament', via: :get, :as => 'best_players_tournament'
+  match 'best_players_game'     => 'stats#best_players_game',   via: :get,    :as => 'best_players_game'
+
+
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

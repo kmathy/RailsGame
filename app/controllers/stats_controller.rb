@@ -1,18 +1,25 @@
 class StatsController < ApplicationController
 
   def index
-    @game = best_game
+
+  end
+
+  def best_players
     @users = User.all
-    stat_general
+    respond_to do |format|
+      format.html
+    end
   end
 
-  private
-
-  def best_game
-
+  def best_players_tournament
+    respond_to do |format|
+      format.html
+    end
   end
 
-  def stat_general
-
+  def best_players_game
+    respond_to do |format|
+      format.html
+    end
   end
 end

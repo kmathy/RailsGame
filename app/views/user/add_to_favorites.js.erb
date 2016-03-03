@@ -1,0 +1,3 @@
+$li = $('#fav-<%= @game.id %>').closest('li');
+$('#fav-<%= @game.id %>').remove();
+$li.append("<span class=\'glyphicon glyphicon-star\'>");
