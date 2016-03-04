@@ -1,3 +1,15 @@
 #body
   %h1
     Best Players for a specific tournament
+  = form_for @tournament, url: search_tournament_path, :html => {:remote => true} do |f|
+    = f.collection_select(:id, Tournament.all, :id, :name)
+    = f.submit 'Search'
+
+  - if @users == nil
+    %p.text-info.text-center#info Select a Tournament
+
+  %table.table.table-bordered.table-hover
+    %thead
+      %th Pseudo
+      %th Nb Victory
+    %tbody#table-content

@@ -64,9 +64,11 @@ RailsGame::Application.routes.draw do
 
   resources :stats
 
-  match 'best_players'          => 'stats#best_players',        via: :get,    :as => 'best_players'
-  match 'best_players_tournament' => 'stats#best_players_tournament', via: :get, :as => 'best_players_tournament'
-  match 'best_players_game'     => 'stats#best_players_game',   via: :get,    :as => 'best_players_game'
+  match 'best_players'            => 'stats#best_players',              via: :get,        :as => 'best_players'
+  match 'best_players_tournament' => 'stats#best_players_tournament',   via: :get,        :as => 'best_players_tournament'
+  match 'search_tournament'       => 'stats#search_tournament',         via: :post,       :as => 'search_tournament'
+  match 'best_players_game'       => 'stats#best_players_game',         via: :get,        :as => 'best_players_game'
+  match 'search_game'             => 'stats#search_game',               via: :post,       :as => 'search_game'
 
 
 

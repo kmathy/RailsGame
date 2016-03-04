@@ -45,14 +45,16 @@ class MatchesController < ApplicationController
   def start_matches
     pending_players = PendingPlayer.where("tournament_id = #{params['t_id']}
                       AND game_id = #{params['g_id']}")
+    game = Game.find(params[:g_id])
     array = Array.new
     pending_players.select("player_id").each { |pp|
       array.push(pp.player_id)
     }
     players = array.combination(2).to_a
     players.each { |players_id|
-      Match.create(:player_1 => User.find(players_id.first), :player_2 => User.find(players_id.second),
+      match = Match.create(:player_1 => User.find(players_id.first), :player_2 => User.find(players_id.second),
                    :tournament_id => params[:t_id], :game_id => params[:g_id])
+      game.matches.push(match)
     }
     pending_players.destroy_all
     redirect_to tournament_path(:id => params[:t_id])

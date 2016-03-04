@@ -1,0 +1,14 @@
+$('#table-content').children().remove();
+
+if(<%= @users.any? %>){
+  $('#info').html('We found <%= @users.count %> users for this tournament');
+  <% @users.sort_by{|e| -e[:nb_victory]}.each do |player| %>
+    $('#table-content')
+        .append("<tr>" +
+            "<td><%= player.pseudo %></td>"+
+            "<td><%= player.nb_victory %></td>"+
+            "</tr>");
+  <% end %>
+} else {
+  $('#info').html('There is no result yet');
+}

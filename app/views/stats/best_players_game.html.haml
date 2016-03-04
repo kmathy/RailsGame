@@ -1,3 +1,15 @@
 #body
   %h1
     Best Players for a specific game
+  = form_for @game, url: search_game_path, :html => {:remote => true} do |f|
+    = f.collection_select(:id, Game.all, :id, :title)
+    = f.submit 'Search'
+
+  - if @users == nil
+    %p.text-info.text-center#info Select a Game
+
+  %table.table.table-bordered.table-hover
+    %thead
+      %th Pseudo
+      %th Points
+    %tbody#table-content
