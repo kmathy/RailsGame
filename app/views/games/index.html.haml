@@ -1,20 +1,24 @@
-%h1 Listing games
-%table.table.table-bordered.table-hover
+%h1.page-header.text-center Listing games
+%table.table.table-striped.table-hover
   %thead
     %th Title
     %th Description
     %th Genre
     %th
-    %th
-    %th
+    - if can? :update, @games
+      %th
+      %th
   - @games.each do |game|
     %tr
       %td= game.title
-      %td= game.description
+      %td.text-justify= game.description
       %td= game.genre
-      %td= link_to 'Show', game
-      %td= link_to 'Edit', edit_game_path(game)
-      %td= link_to 'Destroy', game, method: :delete, data: { confirm: 'Are you sure?' }
+      %td.text-center= link_to 'Show', game, :class => 'btn btn-sm btn-info'
+      - if can? :update, @games
+        %td.text-center= link_to 'Edit', edit_game_path(game), :class => 'btn btn-sm btn-warning'
+        %td.text-center= link_to 'Destroy', game, method: :delete, data: { confirm: 'Are you sure?' }, :class => 'btn btn-sm btn-danger'
 %br/
-= link_to 'New Game', new_game_path
-= link_to 'Seed Games', seed_games_path, method: :post
+- if can? :create, @games
+  %div.text-center
+    = link_to 'New Game', new_game_path, :class => 'btn btn-primary'
+    = link_to 'Seed Games', seed_games_path, method: :post, :class => 'btn btn-info'

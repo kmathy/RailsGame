@@ -1,21 +1,16 @@
-%h1 Your profile
-
-%p
-  %b Email:
-  = @user.email
-
-%p
-  %b Avatar:
-  = image_tag @user.avatar_url if @user.avatar
-
-%p
-  %b Name:
-  = @user.first_name
-  = @user.last_name
-
-%p
-  %b last connexion:
-  = @user.last_sign_in_at.to_datetime.to_formatted_s(:short)
+%h1.page-header.text-center Profile
+%div.row
+  %div.col-sm-2
+    = image_tag @user.avatar_url if @user.avatar
+  %div.col-sm-10
+    %h2 #{@user.first_name} #{@user.last_name} (#{@user.pseudo})
+%div.row
+  %hr
+%div.row
+  %div.col-sm-3
+    %p Email: #{@user.email}
+  %div.col-sm-9
+    %p Last connexion: #{@user.last_sign_in_at.to_datetime.to_formatted_s(:short)}
 
 %p
   = image_tag "http://maps.google.com/maps/api/staticmap?size=450x300&sensor=false&zoom=16&markers=#{@user.latitude}%2C#{@user.longitude}"

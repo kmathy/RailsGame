@@ -71,6 +71,13 @@ RailsGame::Application.routes.draw do
   match 'search_game'             => 'stats#search_game',               via: :post,       :as => 'search_game'
 
 
+  constraints subdomain: 'api' do
+    namespace :api, path: '/' do
+      resources :user, only: [:show]
+      resources :tournaments, :only => [:index]
+    end
+  end
+
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

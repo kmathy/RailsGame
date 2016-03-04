@@ -1,18 +1,18 @@
-%h1 Listing tournaments
+%h1.page-header.text-center Listing tournaments
 
 - @places = []
 - @names = []
 - Tournament.all.each do |tournament|
   - @places.push(tournament.place)
   - @names.push(tournament.name)
-
-= search_form_for @query, :class => 'form-inline search', :id => '' do |f|
-  .form-group
-    = f.search_field :place_cont, :class => 'form-control', :id => 'myInput', :placeholder => 'Place ex: Avenue Louise'
-  OR
-  .form-group
-    = f.search_field :name_cont, :class => 'form-control', :id => 'names', :placeholder => 'Name ex: Tournament n°1'
-  = f.submit 'Search', class: 'btn btn-primary glyphicon glyphicon-search'
+%div.text-center
+  = search_form_for @query, :class => 'form-inline search', :id => '' do |f|
+    .form-group
+      = f.search_field :place_cont, :class => 'form-control', :id => 'myInput', :placeholder => 'Place ex: Avenue Louise'
+    OR
+    .form-group
+      = f.search_field :name_cont, :class => 'form-control', :id => 'names', :placeholder => 'Name ex: Tournament n°1'
+    = f.submit 'Search', class: 'btn btn-primary glyphicon glyphicon-search'
 
 :javascript
   var places = #{@places}
@@ -50,7 +50,7 @@
     });
   });
 
-%table.table.table-hover.table-bordered
+%table.table.table-hover.table-striped
   %thead
     %tr
       %th Name
@@ -67,11 +67,11 @@
         %td= tournament.name
         %td= tournament.place
         %td= tournament.nb_players_max
-        %td= link_to 'Show', tournament, :class => 'btn btn-info btn-sm'
+        %td.text-center= link_to 'Show', tournament, :class => 'btn btn-info btn-sm'
         - if can? :update, @tournaments
-          %td= link_to 'Edit', edit_tournament_path(tournament), :class => 'btn btn-warning btn-sm'
+          %td.text-center= link_to 'Edit', edit_tournament_path(tournament), :class => 'btn btn-warning btn-sm'
         - if can? :destroy, @tournaments
-          %td= link_to 'Destroy', tournament, method: :delete, data: {confirm: 'Are you sure?'}, :id => "del-#{tournament.id}", :remote => true, :class => 'btn btn-danger btn-sm'
+          %td.text-center= link_to 'Destroy', tournament, method: :delete, data: {confirm: 'Are you sure?'}, :id => "del-#{tournament.id}", :remote => true, :class => 'btn btn-danger btn-sm'
 %br/
 - if can? :create, @tournaments
   %p

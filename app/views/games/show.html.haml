@@ -1,18 +1,14 @@
 %p#notice= notice
-%p
-  %b Title:
+%h1.page-header.text-center
   = @game.title
-%p
-  %b Description:
+
+%h3.text-center Genre: #{@game.genre}
+
+%p.jumbotron
   = @game.description
-%p
-  %b Genre:
-  = @game.genre
 
-%p
-  = ratings_for @game
+%p Your rating: #{ratings_for @game}
 
-
-= link_to 'Edit', edit_game_path(@game)
-|
-\#{link_to 'Back', games_path}
+- if can? :update, @game
+  = link_to 'Edit', edit_game_path(@game), :class => 'btn btn-warning'
+=link_to 'Back', games_path, :class => 'btn btn-info'
