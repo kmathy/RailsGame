@@ -78,5 +78,9 @@ gem 'ajaxful_rating', '>= 3.0.0.beta8'
 # to put games in favorites
 gem 'markable'
 
+#heroku
+gem 'heroku'
+gem 'thin'
+
 
 
