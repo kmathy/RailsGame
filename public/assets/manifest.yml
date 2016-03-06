@@ -9,6 +9,8 @@ star_small.png: star_small-49c6b02c29f4ee65e4f6b063ded4bd7a.png
 star_small/index.png: star_small-49c6b02c29f4ee65e4f6b063ded4bd7a.png
 application.js: application-0d460f53aa6cfbf1edcc67906a36b245.js
 application/index.js: application-0d460f53aa6cfbf1edcc67906a36b245.js
+ajaxful_rating.css: ajaxful_rating-3394049d0e718bd2b20daeeabc2a6340.css
+ajaxful_rating/index.css: ajaxful_rating-3394049d0e718bd2b20daeeabc2a6340.css
 application.css: application-f800410c636d26a659e614a6987312ef.css
 application/index.css: application-f800410c636d26a659e614a6987312ef.css
 typeahead.css: typeahead-7e4b146fede1617f512525571ca9c854.css
