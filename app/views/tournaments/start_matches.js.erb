@@ -1,0 +1,7 @@
+var $elem = $("#collapse<%= @game.id %> > div.panel-body");
+$elem.children().remove();
+$elem.append("<ul class='list-group'>");
+<% @game.matches.where("tournament_id = #{@tournament.id}").each do |match| %>
+  $elem.find("ul").append('<li class="list-group-item"><%= link_to "#{match.player_1.pseudo} VS #{match.player_2.pseudo}", match_path(match), :class => 'btn btn-info'%></li>')
+<% end %>
+$elem.append('</ul>');

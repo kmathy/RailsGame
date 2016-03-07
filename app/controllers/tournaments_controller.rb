@@ -88,22 +88,22 @@ class TournamentsController < ApplicationController
 
   # POST /add_player
   def add_player
-    tournament = Tournament.find(params[:tournament][:tournament_id])
-    game = tournament.games.find(params[:tournament][:game_id])
-    user = User.find(session['warden.user.user.key'][0][0])
+    @tournament = Tournament.find(params[:tournament][:tournament_id])
+    @game = @tournament.games.find(params[:tournament][:game_id])
+    @user = User.find(session['warden.user.user.key'][0][0])
 
-    user.games.push(game) unless user.games.include?(game)
-    game.users.push(user) unless game.users.include?(user)
-    if tournament.users.exclude?(user)
-      tournament.users.push(user)
-      ApplicationMailer.sign_in_tournament(user, tournament).deliver
+    @user.games.push(@game) unless @user.games.include?(@game)
+    @game.users.push(@user) unless @game.users.include?(@user)
+    if @tournament.users.exclude?(@user)
+      @tournament.users.push(@user)
+      ApplicationMailer.sign_in_tournament(@user, @tournament).deliver
     end
 
-    pp = PendingPlayer.new(:tournament_id => tournament.id, :game_id => game.id, :player_id => user.id)
+    pp = PendingPlayer.new(:tournament_id => @tournament.id, :game_id => @game.id, :player_id => @user.id)
     if pp.save
-      ApplicationMailer.sign_in_tournament_game(user, tournament, game).deliver
+      ApplicationMailer.sign_in_tournament_game(@user, @tournament, @game).deliver
       respond_to do |format|
-        format.html { redirect_to tournament_path(:id => tournament.id)}
+        format.html { redirect_to tournament_path(:id => @tournament.id)}
         format.js
       end
     end

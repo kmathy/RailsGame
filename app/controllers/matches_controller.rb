@@ -43,9 +43,10 @@ class MatchesController < ApplicationController
   end
 
   def start_matches
+    @tournament = Tournament.find(params[:t_id])
     pending_players = PendingPlayer.where("tournament_id = #{params['t_id']}
                       AND game_id = #{params['g_id']}")
-    game = Game.find(params[:g_id])
+    @game = Game.find(params[:g_id])
     array = Array.new
     pending_players.select("player_id").each { |pp|
       array.push(pp.player_id)
@@ -54,10 +55,13 @@ class MatchesController < ApplicationController
     players.each { |players_id|
       match = Match.create(:player_1 => User.find(players_id.first), :player_2 => User.find(players_id.second),
                    :tournament_id => params[:t_id], :game_id => params[:g_id])
-      game.matches.push(match)
+      @game.matches.push(match)
     }
     pending_players.destroy_all
-    redirect_to tournament_path(:id => params[:t_id])
+    respond_to do |format|
+      format.html {redirect_to tournament_path(params[:t_id])}
+      format.js {render :template => 'tournaments/start_matches.js.erb', :layout => false}
+    end
   end
 
   private

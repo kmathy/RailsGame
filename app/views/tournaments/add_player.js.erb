@@ -1,2 +1,6 @@
-alert('you\'re signed in!');
-$(location).attr('href', "<%= @tournament %>");
+$("#sign_in_<%= @tournament.id %>").remove();
+var $elem = $("#collapse<%= @game.id %> #users");
+if (!$elem.children().length) {
+  $elem.siblings("p").remove();
+}
+$elem.append("<li class='list-group-item'><%=@user.pseudo%></li>");
