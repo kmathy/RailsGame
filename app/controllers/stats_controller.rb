@@ -15,7 +15,9 @@ class StatsController < ApplicationController
 
   def search_tournament
     tournament = Tournament.find(params[:tournament][:id])
-    @users = tournament.users
+    @users = @users.to_h
+    matches = tournament.matches
+    process_ranking(matches)
     respond_to do |format|
       format.html {redirect_to best_players_tournament_path}
       format.js {render :search_tournament}
@@ -28,24 +30,32 @@ class StatsController < ApplicationController
   end
 
   def search_game
-      game = Game.find(params[:game][:id])
-      @users = @users.to_h
-      game.matches.each do |match|
-        unless @users.has_key?(match.player_1.pseudo)
-          @users.store(match.player_1.pseudo, 0)
-        end
-        unless @users.has_key?(match.player_2.pseudo)
-          @users.store(match.player_2.pseudo, 0)
-        end
-        if match.points_1 != nil
-          @users["#{match.player_1.pseudo}"] += match.points_1
+    game = Game.find(params[:game][:id])
+    @users = @users.to_h
+    matches = game.matches
+    process_ranking(matches)
+    respond_to do |format|
+      format.html {redirect_to best_players_game_path}
+      format.js {render :search_game}
+    end
+  end
 
-          @users["#{match.player_2.pseudo}"] += match.points_2
-        end
+  private
+
+  def process_ranking(matches)
+    matches.each do |match|
+      unless @users.has_key?(match.player_1.pseudo)
+        @users.store(match.player_1.pseudo, 0)
       end
-      respond_to do |format|
-        format.html {redirect_to best_players_game_path}
-        format.js {render :search_game}
+      unless @users.has_key?(match.player_2.pseudo)
+        @users.store(match.player_2.pseudo, 0)
       end
+      if match.points_1 != nil
+        @users["#{match.player_1.pseudo}"] += match.points_1
+
+        @users["#{match.player_2.pseudo}"] += match.points_2
+      end
+    end
+    @users
   end
 end
